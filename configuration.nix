@@ -59,6 +59,10 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
+  # Enable bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -83,6 +87,7 @@
   programs.git = {
     enable = true;
   };
+  programs.steam.enable = true;
 
   # System
   system.stateVersion = "25.05";
