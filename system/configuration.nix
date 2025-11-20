@@ -51,7 +51,6 @@
     isNormalUser = true;
     description = "Tomas Xavier Santos";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [ vesktop obsidian];
   };
 
   # Allow unfree packages
@@ -76,7 +75,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim 
+     neovim
      zed-editor
      kitty
      wofi
