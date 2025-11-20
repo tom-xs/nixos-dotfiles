@@ -80,6 +80,7 @@
      kitty
      wofi
      wget
+     pavucontrol
   ];
 
   programs.hyprland.enable = true;
