@@ -83,6 +83,10 @@
      pavucontrol
   ];
 
+  # Disable PS5 controller touchpad from acting like a mouse
+  services.udev.extraRules = ''
+   ACTION=="add|change", KERNEL=="event[0-9]*", ATTRS{name}=="*Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
+  '';
   programs.hyprland.enable = true;
   programs.firefox.enable = true;
   programs.git = {
