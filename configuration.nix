@@ -77,6 +77,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
      neovim 
+     zed-editor
      kitty
      wofi
      wget
