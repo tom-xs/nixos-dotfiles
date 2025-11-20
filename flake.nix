@@ -15,7 +15,7 @@
       "camaragibe" = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
-          ./configuration.nix # Your core system configuration
+          ./system/configuration.nix # Your core system configuration
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
