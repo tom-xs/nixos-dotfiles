@@ -76,11 +76,20 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
      neovim
-     zed-editor
      kitty
      wofi
      wget
      pavucontrol
+     zed-editor
+     vesktop
+     lutris
+  ];
+
+  fonts.packages = with pkgs.nerd-fonts; [
+    symbols-only
+    sauce-code-pro
+    roboto-mono
+    jetbrains-mono
   ];
 
   # Disable PS5 controller touchpad from acting like a mouse
@@ -88,11 +97,13 @@
    ACTION=="add|change", KERNEL=="event[0-9]*", ATTRS{name}=="*Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
   programs.hyprland.enable = true;
+  programs.waybar.enable = true;
   programs.firefox.enable = true;
   programs.git = {
     enable = true;
   };
   programs.steam.enable = true;
+  programs.gamemode.enable = true;
 
   # System
   system.stateVersion = "25.05";
