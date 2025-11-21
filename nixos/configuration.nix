@@ -79,6 +79,8 @@
      kitty
      wofi
      wget
+     btop
+     tldr
      pavucontrol
      zed-editor
      vesktop
