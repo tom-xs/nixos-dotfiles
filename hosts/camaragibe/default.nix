@@ -1,14 +1,19 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, ... }:
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Hardware
       ./hardware-configuration.nix
-      ./nvidia-configuration.nix
+
+      # System modules
+      ../../modules/nvidia.nix
+      ../../modules/maintenance.nix  # GC & Bootloader limits
+      ../../modules/gaming.nix       # Steam, Gamemode
+      ../../modules/common-desktop.nix
+
+      # Windows Manager
+      ../../modules/hyprland.nix
     ];
 
   # Bootloader.
@@ -62,56 +67,15 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  # Enable sound with pipewire.
-  services.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
   # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-     neovim
-     kitty
-     wofi
-     wget
-     btop
-     tldr
-     pavucontrol
-     zed-editor
-     vesktop
-     lutris
+    vim
+    wget
   ];
 
-  fonts.packages = with pkgs.nerd-fonts; [
-    symbols-only
-    sauce-code-pro
-    roboto-mono
-    jetbrains-mono
-  ];
-
-  # Disable PS5 controller touchpad from acting like a mouse
-  services.udev.extraRules = ''
-   ACTION=="add|change", KERNEL=="event[0-9]*", ATTRS{name}=="*Wireless Controller Touchpad", ENV{LIBINPUT_IGNORE_DEVICE}="1"
-  '';
-  programs.hyprland.enable = true;
-  programs.waybar.enable = true;
-  programs.firefox.enable = true;
   programs.git = {
     enable = true;
   };
-
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
-  };
-  programs.gamemode.enable = true;
 
   # System
   system.stateVersion = "25.05";
