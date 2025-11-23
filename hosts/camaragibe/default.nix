@@ -20,8 +20,17 @@
   boot.loader = {
     grub.enable = true;
     grub.device = "nodev";
-    grub.useOSProber = true;
     grub.efiSupport = true;
+    grub.extraEntries =
+    ''
+    menuentry "Nobara" --class fedora --class os {
+  		insmod part_gpt
+  		insmod ext2
+  		insmod fat
+  		search --no-floppy --fs-uuid --set=root 622A-D5A8
+  		chainloader /EFI/fedora/grubx64.efi
+    }
+    '';
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
   };
