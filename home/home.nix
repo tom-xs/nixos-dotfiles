@@ -16,6 +16,7 @@
     btop
     tldr
     vesktop
+    telegram-desktop
     zed-editor
     nixd
     nil
