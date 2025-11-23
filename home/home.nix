@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   home.username = "tomasxs";
@@ -17,6 +17,10 @@
     nixd
     nil
   ];
+
+  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [];
+  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [];
+  systemd.user.services.hypridle.Install.WantedBy = lib.mkForce [];
 
   # Cursor
   home.pointerCursor = {

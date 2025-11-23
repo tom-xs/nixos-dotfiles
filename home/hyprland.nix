@@ -12,8 +12,15 @@
       "$fileManager" = "dolphin";
       "$menu" = "wofi --show drun";
 
+      # Initial programs
+      exec-once = [
+        "hyprpaper"
+        "hypridle"
+        "waybar"
+      ];
+
       # Monitor Settings
-      monitor=["HDMI-A-1,1920x1080@74.97,auto,1" "eDP-1,1920x1080@120.03,auto,1"];
+      monitor=["HDMI-A-1,1920x1080@74.97,auto,1" "eDP-2,1920x1080@120.03,auto,1"];
 
       # Appearance & Style
       general = {
@@ -84,6 +91,7 @@
         "$mod, D, exec, $menu"
         "$mod, P, pseudo, "
         "$mod, J, togglesplit, "
+        "$mod, F, fullscreen, "
         "$mod, SPACE, togglefloating,"
         "$mod ALT, E, exit,"
 
@@ -185,9 +193,9 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      ipc = "on";
-      preload = [ "~/.local/share/wallpaper/white1.jpg" ];
-      wallpaper = [ "~/.local/share/wallpaper/white1.jpg" ];
+      # ipc = "on";
+      preload = [ ",.local/share/wallpaper/white1.jpg" ];
+      wallpaper = [ ",.local/share/wallpaper/white1.jpg" ];
     };
   };
 }
