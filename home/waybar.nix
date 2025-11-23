@@ -1,28 +1,28 @@
-{ pkgs, lib, ... }:
+{ ... }:
 
 {
   programs.waybar = {
     enable = true;
     systemd.enable = false;
-    
+
     settings = {
       mainBar = {
         layer = "top";
         position = "top";
-        height = 26; # Very Compact Height
+        height = 26;
         spacing = 0;
         margin-top = 5;
         margin-left = 10;
         margin-right = 10;
-        
+
         modules-left = [ "hyprland/workspaces" ];
         modules-center = [ "clock" "group/music" ];
-        modules-right = [ 
-          "group/audio" 
-          "network" 
-          "group/hardware" 
-          "battery" 
-          "tray" 
+        modules-right = [
+          "group/audio"
+          "network"
+          "group/hardware"
+          "battery"
+          "tray"
         ];
 
         # --- Groups ---
@@ -44,13 +44,13 @@
 
         # --- Modules ---
 
-	"hyprland/workspaces" = {
+        "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
-          
+
           # Use {icon} instead of {name}
           format = "{icon}";
-          
+
           # Map workspace numbers to icons
           format-icons = {
             "1" = "";  # Network/Web
@@ -61,14 +61,13 @@
 
           # Make them always visible
           persistent-workspaces = {
-             "1" = [];
-             "2" = [];
-             "3" = [];
+            "1" = [];
+            "2" = [];
+            "3" = [];
           };
         };
 
         "clock" = {
-          # Text only, no icon
           format = "{:%H:%M | %d/%m/%y}";
           tooltip-format = "{calendar}";
           calendar = {
@@ -90,7 +89,7 @@
           format-paused = "{status_icon}";
           status-icons = { playing = "⏸"; paused = "▶"; stopped = "■"; };
           max-length = 10;
-          on-click-right = "noop"; 
+          on-click-right = "noop";
         };
 
         "custom/prev" = {
@@ -137,16 +136,16 @@
           format-ethernet = " Eth";
           format-linked = " (No IP)";
           format-disconnected = "⚠ Off";
-          on-click = "nm-connection-editor"; 
+          on-click = "nm-connection-editor";
         };
 
-        "cpu" = { 
-          format = " {usage}%"; 
-          tooltip = false; 
+        "cpu" = {
+          format = " {usage}%";
+          tooltip = false;
         };
 
-        "memory" = { 
-          format = " {}%"; 
+        "memory" = {
+          format = " {}%";
         };
 
         "custom/gpu" = {
@@ -168,30 +167,30 @@
     # --- CSS Styles ---
     style = ''
       * {
-        border: none;
-        border-radius: 0;
-        font-family: "JetBrainsMono Nerd Font", monospace;
-        font-size: 11px;
-        font-weight: bold;
-        min-height: 0;
+      border: none;
+      border-radius: 0;
+      font-family: "JetBrainsMono Nerd Font", monospace;
+      font-size: 11px;
+      font-weight: bold;
+      min-height: 0;
       }
 
       window#waybar {
-        background: transparent;
-        color: #5c5f77;
+      background: transparent;
+      color: #5c5f77;
       }
 
       /* Spacing */
       #workspaces, #clock, #group-music, #group-audio, #network, #group-hardware, #battery, #tray {
-        margin: 0 4px;
+      margin: 0 4px;
       }
 
-      /* 
-       * STYLE:
-       * Background: White
-       * Border: 2px Solid Dark Grey (#5c5f77)
-       * Padding: Reduced to 6px horizontal
-       */
+      /*
+      * STYLE:
+      * Background: White
+      * Border: 2px Solid Dark Grey (#5c5f77)
+      * Padding: Reduced to 6px horizontal
+      */
 
       #workspaces,
       #clock,
@@ -201,34 +200,34 @@
       #cpu, #memory, #custom-gpu,
       #battery,
       #tray {
-        background-color: #ffffff;
-        color: #5c5f77;
-        padding: 0 6px; /* Tighter padding for compactness */
-        border-radius: 6px;
-        border: 2px solid #5c5f77;
+      background-color: #ffffff;
+      color: #5c5f77;
+      padding: 0 6px; /* Tighter padding for compactness */
+      border-radius: 6px;
+      border: 2px solid #5c5f77;
       }
 
       /* Workspaces Specifics */
       #workspaces {
-        padding: 0; /* Remove container padding */
+      padding: 0; /* Remove container padding */
       }
       #workspaces button {
-        padding: 0 5px; /* Very tight button padding */
-        background: transparent;
-        color: #5c5f77;
+      padding: 0 5px; /* Very tight button padding */
+      background: transparent;
+      color: #5c5f77;
       }
       #workspaces button.active {
-        background-color: #f9e2af; 
-        color: #5c5f77;
-        border-radius: 4px;
+      background-color: #f9e2af;
+      color: #5c5f77;
+      border-radius: 4px;
       }
       #workspaces button:hover {
-        background: rgba(249, 226, 175, 0.5);
-        border-radius: 4px;
+      background: rgba(249, 226, 175, 0.5);
+      border-radius: 4px;
       }
 
       /* Fix Group Borders */
-      
+
       /* Music Group */
       #custom-prev { border-right: none; border-radius: 6px 0 0 6px; }
       #mpris { border-left: none; border-right: none; border-radius: 0; }
@@ -245,15 +244,15 @@
 
       /* Battery States */
       #battery.charging {
-        background-color: #f9e2af;
+      background-color: #f9e2af;
       }
       #battery.critical:not(.charging) {
-        background-color: #ffcccc;
-        animation: blink 0.5s linear infinite alternate;
+      background-color: #ffcccc;
+      animation: blink 0.5s linear infinite alternate;
       }
 
       @keyframes blink {
-        to { background-color: #ffffff; }
+      to { background-color: #ffffff; }
       }
     '';
   };
