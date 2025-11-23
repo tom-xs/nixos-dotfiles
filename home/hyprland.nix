@@ -17,6 +17,13 @@
         "waybar"
       ];
 
+      # Workspaces
+      workspace = [
+        "1, monitor:HDMI-A-1"
+        "2, monitor:HDMI-A-1"
+        "3, monitor:HDMI-A-1"
+      ];
+
       # Monitor Settings
       monitor=[
         "HDMI-A-1,1920x1080@74.97,auto,1"
@@ -194,7 +201,7 @@
   services.hyprpaper = {
     enable = true;
     settings = {
-      # ipc = "on";
+      ipc = "on";
       preload = [ ".local/share/wallpaper/white1.jpg" ];
       wallpaper = [ ",.local/share/wallpaper/white1.jpg" ];
     };

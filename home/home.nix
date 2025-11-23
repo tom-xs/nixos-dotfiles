@@ -5,7 +5,10 @@
   home.homeDirectory = "/home/tomasxs";
 
   # Hyprland Configuration
-  imports = [ ./hyprland.nix ];
+  imports = [
+    ./hyprland.nix
+    ./waybar.nix
+  ];
 
   # User Packages
   home.packages = with pkgs; [
