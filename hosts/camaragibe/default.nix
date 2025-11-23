@@ -16,9 +16,15 @@
       ../../modules/hyprland.nix
     ];
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  # Bootloader
+  boot.loader = {
+    grub.enable = true;
+    grub.device = "nodev";
+    grub.useOSProber = true;
+    grub.efiSupport = true;
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = true;
+  };
 
   # Enable networking
   networking.networkmanager.enable = true;
