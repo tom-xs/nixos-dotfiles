@@ -7,7 +7,6 @@
   # User Packages
   home.packages = with pkgs; [
     neovim
-    kitty
     btop
     tldr
     vesktop
@@ -15,15 +14,15 @@
     swww
   ];
 
-  # 1. Set Breeze Cursor
+  # Cursor
   home.pointerCursor = {
     gtk.enable = true;
     name = "breeze_cursors";
     package = pkgs.kdePackages.breeze;
-    size = 24;
+    size = 18;
   };
 
-  # Git Configuration
+  # Git
   programs.git = {
     enable = true;
     settings.user = {
@@ -32,11 +31,15 @@
     };
   };
 
-  # 2. Kitty with Earl Grey Theme
+  # Kitty
   programs.kitty = {
     enable = true;
-    themeFile = "Catppuccin-Mocha";
-    settings.font_family = "SauceCodePro Nerd Font";
+    themeFile = "everforest_light_hard";
+    extraConfig = ''confirm_os_window_close 0'';
+    font = {
+      name = "JetBrains Mono NerdFont";
+      size = 12;
+    };
   };
 
   home.stateVersion = "25.05";

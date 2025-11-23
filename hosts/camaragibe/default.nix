@@ -71,11 +71,8 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
+    git
   ];
-
-  programs.git = {
-    enable = true;
-  };
 
   # System
   system.stateVersion = "25.05";

@@ -1,7 +1,8 @@
 { pkgs, ... }:
 
 {
-  environment.systemPackages = with pkgs;[ firefox wofi pavucontrol];
+  environment.systemPackages = with pkgs;[ firefox wofi kitty pavucontrol];
+
   # Sound (Pipewire)
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
