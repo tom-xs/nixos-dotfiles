@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   imports =
@@ -73,6 +73,9 @@
     wget
     git
   ];
+
+  # Adds "backup" and save current dotfiles, see:https://nix-community.github.io/home-manager/nixos-options.xhtml
+  home-manager.backupFileExtension = "backup";
 
   # System
   system.stateVersion = "25.05";

@@ -2,7 +2,7 @@
   description = "Tomasxs NixOS Flake";
 
   inputs = {
-    # Using unstable as requested for latest packages (25.05 is not yet released)
+    # Using unstable as requested for latest packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     home-manager = {

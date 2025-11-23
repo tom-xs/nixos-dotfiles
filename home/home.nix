@@ -1,8 +1,11 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
+
+  # Hyprland Configuration
+  imports = [ ./hyprland.nix ];
 
   # User Packages
   home.packages = with pkgs; [
@@ -11,7 +14,8 @@
     tldr
     vesktop
     zed-editor
-    swww
+    nixd
+    nil
   ];
 
   # Cursor
