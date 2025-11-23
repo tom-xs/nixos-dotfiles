@@ -1,6 +1,4 @@
-
 { ... }:
-
 {
   # Hyprland Main Config
   wayland.windowManager.hyprland = {
@@ -20,15 +18,18 @@
       ];
 
       # Monitor Settings
-      monitor=["HDMI-A-1,1920x1080@74.97,auto,1" "eDP-2,1920x1080@120.03,auto,1"];
+      monitor=[
+        "HDMI-A-1,1920x1080@74.97,auto,1"
+        "desc:Najing CEC Panda FPD Technology CO. ltd 0x005F,1920x1080@120.03,auto,1"
+      ];
 
       # Appearance & Style
       general = {
         gaps_in = 5;
         gaps_out = 10;
         border_size = 2;
-        "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        "col.inactive_border" = "rgba(595959aa)";
+        # "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        # "col.inactive_border" = "rgba(595959aa)";
         resize_on_border = false;
         layout = "dwindle";
       };
@@ -194,7 +195,7 @@
     enable = true;
     settings = {
       # ipc = "on";
-      preload = [ ",.local/share/wallpaper/white1.jpg" ];
+      preload = [ ".local/share/wallpaper/white1.jpg" ];
       wallpaper = [ ",.local/share/wallpaper/white1.jpg" ];
     };
   };
