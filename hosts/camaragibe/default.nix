@@ -27,7 +27,7 @@
   		insmod part_gpt
   		insmod ext2
   		insmod fat
-  		search --no-floppy --fs-uuid --set=root 622A-D5A8
+  		search --no-floppy --fs-uuid --set=root 2FED-459B
   		chainloader /EFI/fedora/grubx64.efi
     }
     '';
