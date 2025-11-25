@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ inputs, lib, pkgs, ... }:
 
 {
   home.username = "tomasxs";
@@ -11,7 +11,15 @@
   ];
 
   # User Packages
-  home.packages = with pkgs; [
+  home.packages =
+  let
+  stremioPkgs = import inputs.nixpkgs-for-stremio {
+    inherit (pkgs) system;
+  };
+  in
+  with pkgs;
+  [
+    (stremioPkgs.stremio)
     neovim
     btop
     tldr
