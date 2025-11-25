@@ -17,6 +17,8 @@
       # -- Language Servers --
       lua-language-server
       nil # Nix LSP
+      nixd
+      rust-analyzer
 
       # -- Formatters (for conform.nvim) --
       nixfmt # Nix
@@ -24,6 +26,7 @@
       prettierd # Web (JS/TS/CSS/HTML)
       shfmt # Shell
       black # Python (Enable if you use Python)
+      rustfmt
     ];
 
     # 2. Plugins
@@ -111,6 +114,7 @@
             html = { "prettierd" },
             json = { "prettierd" },
             sh = { "shfmt" },
+            rust = {"rustfmt"},
             },
             format_on_save = {
             timeout_ms = 500,
@@ -193,7 +197,7 @@
         -- LSP Setup
         -- ====================
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        local servers = { "lua_ls", "nil_ls" }
+        local servers = { "lua_ls", "nil_ls", "nixd", "nixl", "rust_analyzer" }
 
       for _, lsp in ipairs(servers) do
         if vim.lsp.config then
@@ -222,6 +226,13 @@
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then cmp.select_next_item()
+                        elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+                        else fallback()
+                        end
+                        end, { 'i', 's' }),
+                    -- }),
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then cmp.select_prev_item()
                         elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
                         else fallback()
                         end

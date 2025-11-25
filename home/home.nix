@@ -29,6 +29,7 @@
       (stremioPkgs.stremio)
       btop
       tldr
+      feh
       vesktop
       telegram-desktop
       zed-editor
