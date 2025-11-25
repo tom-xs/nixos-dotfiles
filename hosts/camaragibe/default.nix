@@ -1,35 +1,33 @@
 { pkgs, ... }:
 
 {
-  imports =
-    [
-      # Hardware
-      ./hardware-configuration.nix
+  imports = [
+    # Hardware
+    ./hardware-configuration.nix
 
-      # System modules
-      ../../modules/nvidia.nix
-      ../../modules/maintenance.nix  # GC & Bootloader limits
-      ../../modules/gaming.nix       # Steam, Gamemode
-      ../../modules/common-desktop.nix
+    # System modules
+    ../../modules/nvidia.nix
+    ../../modules/maintenance.nix # GC & Bootloader limits
+    ../../modules/gaming.nix # Steam, Gamemode
+    ../../modules/common-desktop.nix
 
-      # Windows Manager
-      ../../modules/hyprland.nix
-    ];
+    # Windows Manager
+    ../../modules/hyprland.nix
+  ];
 
   # Bootloader
   boot.loader = {
     grub.enable = true;
     grub.device = "nodev";
     grub.efiSupport = true;
-    grub.extraEntries =
-    ''
-    menuentry "Nobara" --class fedora --class os {
-  		insmod part_gpt
-  		insmod ext2
-  		insmod fat
-  		search --no-floppy --fs-uuid --set=root 2FED-459B
-  		chainloader /EFI/fedora/grubx64.efi
-    }
+    grub.extraEntries = ''
+        menuentry "Nobara" --class fedora --class os {
+      		insmod part_gpt
+      		insmod ext2
+      		insmod fat
+      		search --no-floppy --fs-uuid --set=root 2FED-459B
+      		chainloader /EFI/fedora/grubx64.efi
+        }
     '';
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
@@ -70,13 +68,19 @@
   users.users.tomasxs = {
     isNormalUser = true;
     description = "Tomas Xavier Santos";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;

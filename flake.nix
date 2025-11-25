@@ -14,27 +14,34 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
-    nixosConfigurations = {
-      # Host: camaragibe
-      camaragibe = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
-        modules = [
+  outputs =
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }@inputs:
+    {
+      nixosConfigurations = {
+        # Host: camaragibe
+        camaragibe = nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          specialArgs = { inherit inputs; };
+          modules = [
 
-           # Host specific config
-          ./hosts/camaragibe/default.nix
+            # Host specific config
+            ./hosts/camaragibe/default.nix
 
-          # Home Manager Module
-          home-manager.nixosModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs; };
-            home-manager.users.tomasxs = import ./home/home.nix;
-          }
-        ];
+            # Home Manager Module
+            home-manager.nixosModules.home-manager
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.users.tomasxs = import ./home/home.nix;
+            }
+          ];
+        };
       };
     };
-  };
 }

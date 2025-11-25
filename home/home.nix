@@ -1,4 +1,9 @@
-{ inputs, lib, pkgs, ... }:
+{
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   home.username = "tomasxs";
@@ -14,27 +19,27 @@
 
   # User Packages
   home.packages =
-  let
-  stremioPkgs = import inputs.nixpkgs-for-stremio {
-    inherit (pkgs) system;
-  };
-  in
-  with pkgs;
-  [
-    (stremioPkgs.stremio)
-    btop
-    tldr
-    vesktop
-    telegram-desktop
-    zed-editor
-    httpie-desktop
-    httpie
-    obsidian
-  ];
+    let
+      stremioPkgs = import inputs.nixpkgs-for-stremio {
+        inherit (pkgs) system;
+      };
+    in
+    with pkgs;
+    [
+      (stremioPkgs.stremio)
+      btop
+      tldr
+      vesktop
+      telegram-desktop
+      zed-editor
+      httpie-desktop
+      httpie
+      obsidian
+    ];
 
-  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [];
-  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [];
-  systemd.user.services.hypridle.Install.WantedBy = lib.mkForce [];
+  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ ];
+  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [ ];
+  systemd.user.services.hypridle.Install.WantedBy = lib.mkForce [ ];
 
   # Cursor
   home.pointerCursor = {

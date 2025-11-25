@@ -25,7 +25,7 @@
       ];
 
       # Monitor Settings
-      monitor=[
+      monitor = [
         "HDMI-A-1,1920x1080@74.97,auto,1"
         "desc:Najing CEC Panda FPD Technology CO. ltd 0x005F,1920x1080@120.03,auto,1"
       ];
@@ -61,7 +61,7 @@
           "almostLinear,0.5,0.5,0.75,1.0"
           "quick,0.15,0,0.1,1"
         ];
-        animation =[
+        animation = [
           "global, 1, 10, default"
           "border, 1, 5.39, easeOutQuint"
           "windows, 1, 4.79, easeOutQuint"
@@ -172,13 +172,20 @@
     enable = true;
     settings = {
       general.no_fade_in = true;
-      background = [{ path = "screenshot"; blur_passes = 2; }];
-      input-field = [{
-        size = "200, 50";
-        inner_color = "rgb(91, 96, 120)";
-        outer_color = "rgb(24, 25, 38)";
-        placeholder_text = "Password...";
-      }];
+      background = [
+        {
+          path = "screenshot";
+          blur_passes = 2;
+        }
+      ];
+      input-field = [
+        {
+          size = "200, 50";
+          inner_color = "rgb(91, 96, 120)";
+          outer_color = "rgb(24, 25, 38)";
+          placeholder_text = "Password...";
+        }
+      ];
     };
   };
 
@@ -191,8 +198,15 @@
         before_sleep_cmd = "loginctl lock-session";
       };
       listener = [
-        { timeout = 300; on-timeout = "loginctl lock-session"; }
-        { timeout = 380; on-timeout = "hyprctl dispatch dpms off"; on-resume = "hyprctl dispatch dpms on"; }
+        {
+          timeout = 300;
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 380;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
       ];
     };
   };

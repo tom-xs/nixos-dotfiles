@@ -16,7 +16,10 @@
         margin-right = 10;
 
         modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "clock" "group/music" ];
+        modules-center = [
+          "clock"
+          "group/music"
+        ];
         modules-right = [
           "group/audio"
           "network"
@@ -29,17 +32,28 @@
         # --- Groups ---
         "group/music" = {
           orientation = "horizontal";
-          modules = [ "custom/prev" "mpris" "custom/next" ];
+          modules = [
+            "custom/prev"
+            "mpris"
+            "custom/next"
+          ];
         };
 
         "group/audio" = {
           orientation = "horizontal";
-          modules = [ "pulseaudio" "pulseaudio#microphone" ];
+          modules = [
+            "pulseaudio"
+            "pulseaudio#microphone"
+          ];
         };
 
         "group/hardware" = {
           orientation = "horizontal";
-          modules = [ "cpu" "memory" "custom/gpu" ];
+          modules = [
+            "cpu"
+            "memory"
+            "custom/gpu"
+          ];
         };
 
         # --- Modules ---
@@ -47,15 +61,27 @@
           disable-scroll = true;
           all-outputs = true;
           format = "{icon}";
-          format-icons = { "1" = ""; "2" = ""; "3" = ""; "4" = "󰎚"; };
-          persistent-workspaces = { "1" = []; "2" = []; "3" = []; };
+          format-icons = {
+            "1" = "";
+            "2" = "";
+            "3" = "";
+            "4" = "󰎚";
+          };
+          persistent-workspaces = {
+            "1" = [ ];
+            "2" = [ ];
+            "3" = [ ];
+          };
         };
 
         "clock" = {
           format = "{:%H:%M | %d/%m/%y}";
           tooltip-format = "{calendar}";
           calendar = {
-            mode = "year"; mode-mon-col = 3; weeks-pos = "right"; on-scroll = 1;
+            mode = "year";
+            mode-mon-col = 3;
+            weeks-pos = "right";
+            on-scroll = 1;
             format = {
               months = "{}";
               days = "{}";
@@ -92,14 +118,28 @@
 
         "backlight" = {
           format = "{icon} {percent}%";
-          format-icons = ["" ""];
+          format-icons = [
+            ""
+            ""
+          ];
         };
 
         "pulseaudio" = {
           format = "{icon} {volume}%";
           format-bluetooth = " {volume}%";
           format-muted = "";
-          format-icons = { headphone = ""; hands-free = ""; headset = ""; phone = ""; portable = ""; car = ""; default = ["" ""]; };
+          format-icons = {
+            headphone = "";
+            hands-free = "";
+            headset = "";
+            phone = "";
+            portable = "";
+            car = "";
+            default = [
+              ""
+              ""
+            ];
+          };
           scroll-step = 1;
           on-click = "pavucontrol";
         };
@@ -119,8 +159,13 @@
           on-click = "nm-connection-editor";
         };
 
-        "cpu" = { format = " {usage}%"; tooltip = false; };
-        "memory" = { format = " {}%"; };
+        "cpu" = {
+          format = " {usage}%";
+          tooltip = false;
+        };
+        "memory" = {
+          format = " {}%";
+        };
         "custom/gpu" = {
           exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
           format = " {}%";
@@ -128,11 +173,23 @@
         };
 
         "battery" = {
-          states = { good = 95; warning = 30; critical = 15; };
+          states = {
+            good = 95;
+            warning = 30;
+            critical = 15;
+          };
           format = "{icon} {capacity}%";
-          format-icons = ["" "" "" "" ""];
+          format-icons = [
+            ""
+            ""
+            ""
+            ""
+            ""
+          ];
         };
-        "tray" = { spacing = 10; };
+        "tray" = {
+          spacing = 10;
+        };
       };
     };
 
