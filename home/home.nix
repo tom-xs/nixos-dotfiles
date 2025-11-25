@@ -22,14 +22,14 @@
   with pkgs;
   [
     (stremioPkgs.stremio)
-    neovim
     btop
     tldr
     vesktop
     telegram-desktop
     zed-editor
-    nixd
-    nil
+    httpie-desktop
+    httpie
+    obsidian
   ];
 
   systemd.user.services.waybar.Install.WantedBy = lib.mkForce [];

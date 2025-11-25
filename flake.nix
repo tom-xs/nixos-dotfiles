@@ -21,7 +21,8 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          # Host specific config
+
+           # Host specific config
           ./hosts/camaragibe/default.nix
 
           # Home Manager Module

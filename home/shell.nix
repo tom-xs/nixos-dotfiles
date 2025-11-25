@@ -31,7 +31,7 @@
   programs.eza = {
     enable = true;
     enableBashIntegration = true;
-    icons = true;
+    icons = "auto";
   };
 
   # Zoxide (Better cd)
@@ -49,7 +49,7 @@
     };
   };
 
-  # FZF (Fuzzy Finder - Optional but recommended)
+  # FZF (Fuzzy Finder)
   programs.fzf = {
     enable = true;
     enableBashIntegration = true;
