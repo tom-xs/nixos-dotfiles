@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, lib, ... }:
 
 {
   programs.waybar = {
@@ -21,12 +21,12 @@
           "group/audio"
           "network"
           "group/hardware"
+          "backlight"
           "battery"
           "tray"
         ];
 
         # --- Groups ---
-
         "group/music" = {
           orientation = "horizontal";
           modules = [ "custom/prev" "mpris" "custom/next" ];
@@ -43,38 +43,19 @@
         };
 
         # --- Modules ---
-
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
-
-          # Use {icon} instead of {name}
           format = "{icon}";
-
-          # Map workspace numbers to icons
-          format-icons = {
-            "1" = "";  # Network/Web
-            "2" = "";  # Terminal
-            "3" = "";  # Chat
-            "4" = "󰎚";  # Chat
-          };
-
-          # Make them always visible
-          persistent-workspaces = {
-            "1" = [];
-            "2" = [];
-            "3" = [];
-          };
+          format-icons = { "1" = ""; "2" = ""; "3" = ""; "4" = "󰎚"; };
+          persistent-workspaces = { "1" = []; "2" = []; "3" = []; };
         };
 
         "clock" = {
           format = "{:%H:%M | %d/%m/%y}";
           tooltip-format = "{calendar}";
           calendar = {
-            mode = "year";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
+            mode = "year"; mode-mon-col = 3; weeks-pos = "right"; on-scroll = 1;
             format = {
               months = "{}";
               days = "{}";
@@ -87,8 +68,13 @@
         "mpris" = {
           format = "{status_icon}";
           format-paused = "{status_icon}";
-          status-icons = { playing = "⏸"; paused = "▶"; stopped = "■"; };
-          max-length = 10;
+          format-stopped = "{status_icon}";
+          status-icons = {
+            playing = "";
+            paused = "▶";
+            stopped = "■";
+          };
+          on-click = "playerctl play-pause";
           on-click-right = "noop";
         };
 
@@ -104,26 +90,21 @@
           tooltip = false;
         };
 
+        "backlight" = {
+          format = "{icon} {percent}%";
+          format-icons = ["" ""];
+        };
+
         "pulseaudio" = {
-          # Icons Restored, Removed "Vol" text for compactness
           format = "{icon} {volume}%";
           format-bluetooth = " {volume}%";
           format-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = ["" ""];
-          };
+          format-icons = { headphone = ""; hands-free = ""; headset = ""; phone = ""; portable = ""; car = ""; default = ["" ""]; };
           scroll-step = 1;
           on-click = "pavucontrol";
         };
 
         "pulseaudio#microphone" = {
-          # Icon Restored, Removed "Mic" text
           format = "{format_source}";
           format-source = " {volume}%";
           format-source-muted = "";
@@ -131,7 +112,6 @@
         };
 
         "network" = {
-          # Icons Restored
           format-wifi = " {essid}";
           format-ethernet = " Eth";
           format-linked = " (No IP)";
@@ -139,15 +119,8 @@
           on-click = "nm-connection-editor";
         };
 
-        "cpu" = {
-          format = " {usage}%";
-          tooltip = false;
-        };
-
-        "memory" = {
-          format = " {}%";
-        };
-
+        "cpu" = { format = " {usage}%"; tooltip = false; };
+        "memory" = { format = " {}%"; };
         "custom/gpu" = {
           exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
           format = " {}%";
@@ -159,7 +132,6 @@
           format = "{icon} {capacity}%";
           format-icons = ["" "" "" "" ""];
         };
-
         "tray" = { spacing = 10; };
       };
     };
@@ -167,30 +139,29 @@
     # --- CSS Styles ---
     style = ''
       * {
-      border: none;
-      border-radius: 0;
-      font-family: "JetBrainsMono Nerd Font", monospace;
-      font-size: 11px;
-      font-weight: bold;
-      min-height: 0;
+        border: none;
+        border-radius: 0;
+        font-family: "JetBrainsMono Nerd Font", monospace;
+        font-size: 11px;
+        font-weight: bold;
+        min-height: 0;
       }
 
       window#waybar {
-      background: transparent;
-      color: #5c5f77;
+        background: transparent;
+        color: #5c5f77;
       }
 
       /* Spacing */
-      #workspaces, #clock, #group-music, #group-audio, #network, #group-hardware, #battery, #tray {
-      margin: 0 4px;
+      #workspaces, #clock, #group-music, #group-audio, #network, #group-hardware, #backlight, #battery, #tray {
+        margin: 0 4px;
       }
 
       /*
-      * STYLE:
-      * Background: White
-      * Border: 2px Solid Dark Grey (#5c5f77)
-      * Padding: Reduced to 6px horizontal
-      */
+       * STYLE:
+       * Background: White
+       * Border: 2px Solid Dark Grey (#5c5f77)
+       */
 
       #workspaces,
       #clock,
@@ -198,33 +169,21 @@
       #pulseaudio, #pulseaudio.microphone,
       #network,
       #cpu, #memory, #custom-gpu,
+      #backlight,
       #battery,
       #tray {
-      background-color: #ffffff;
-      color: #5c5f77;
-      padding: 0 6px; /* Tighter padding for compactness */
-      border-radius: 6px;
-      border: 2px solid #5c5f77;
+        background-color: #ffffff;
+        color: #5c5f77;
+        padding: 0 6px;
+        border-radius: 6px;
+        border: 2px solid #5c5f77;
       }
 
       /* Workspaces Specifics */
-      #workspaces {
-      padding: 0; /* Remove container padding */
-      }
-      #workspaces button {
-      padding: 0 5px; /* Very tight button padding */
-      background: transparent;
-      color: #5c5f77;
-      }
-      #workspaces button.active {
-      background-color: #f9e2af;
-      color: #5c5f77;
-      border-radius: 4px;
-      }
-      #workspaces button:hover {
-      background: rgba(249, 226, 175, 0.5);
-      border-radius: 4px;
-      }
+      #workspaces { padding: 0; }
+      #workspaces button { padding: 0 5px; background: transparent; color: #5c5f77; }
+      #workspaces button.active { background-color: #f9e2af; color: #5c5f77; border-radius: 4px; }
+      #workspaces button:hover { background: rgba(249, 226, 175, 0.5); border-radius: 4px; }
 
       /* Fix Group Borders */
 
@@ -242,18 +201,10 @@
       #memory { border-left: none; border-right: none; border-radius: 0; }
       #custom-gpu { border-left: none; border-radius: 0 6px 6px 0; }
 
-      /* Battery States */
-      #battery.charging {
-      background-color: #f9e2af;
-      }
-      #battery.critical:not(.charging) {
-      background-color: #ffcccc;
-      animation: blink 0.5s linear infinite alternate;
-      }
+      #battery.charging { background-color: #f9e2af; }
+      #battery.critical:not(.charging) { background-color: #ffcccc; animation: blink 0.5s linear infinite alternate; }
 
-      @keyframes blink {
-      to { background-color: #ffffff; }
-      }
+      @keyframes blink { to { background-color: #ffffff; } }
     '';
   };
 }
