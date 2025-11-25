@@ -8,6 +8,8 @@
   imports = [
     ./hyprland.nix
     ./waybar.nix
+    ./neovim.nix
+    ./shell.nix
   ];
 
   # User Packages
