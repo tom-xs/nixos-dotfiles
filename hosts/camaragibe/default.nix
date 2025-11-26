@@ -7,8 +7,8 @@
 
     # System modules
     ../../modules/nvidia.nix
-    ../../modules/maintenance.nix # GC & Bootloader limits
-    ../../modules/gaming.nix # Steam, Gamemode
+    ../../modules/maintenance.nix
+    ../../modules/gaming.nix
     ../../modules/common-desktop.nix
 
     # Windows Manager

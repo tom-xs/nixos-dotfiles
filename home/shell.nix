@@ -25,8 +25,6 @@
     };
   };
 
-  # --- Modern Tools ---
-
   # Eza (Better ls)
   programs.eza = {
     enable = true;
@@ -44,9 +42,6 @@
   # Bat (Better cat)
   programs.bat = {
     enable = true;
-    config = {
-      theme = "Dracula";
-    };
   };
 
   # FZF (Fuzzy Finder)

@@ -36,6 +36,7 @@
       httpie-desktop
       httpie
       obsidian
+      zotero
     ];
 
   systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ ];
