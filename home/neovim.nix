@@ -12,30 +12,41 @@
       ripgrep
       fd
       xclip
-      lazygit # Required for lazygit plugin
+      lazygit
 
       # -- Language Servers --
       lua-language-server
-      nil # Nix LSP
+      nil
       nixd
       rust-analyzer
+      python313Packages.python-lsp-server
 
       # -- Formatters (for conform.nvim) --
       nixfmt # Nix
       stylua # Lua
       prettierd # Web (JS/TS/CSS/HTML)
       shfmt # Shell
-      black # Python (Enable if you use Python)
+      black # Python
       rustfmt
     ];
 
     # 2. Plugins
     plugins = with pkgs.vimPlugins; [
       # -- Theme --
-      everforest # Official Vimscript version (Stable)
+      everforest
 
       # -- GUI / UI Improvements --
-      lualine-nvim # Status bar
+      # Workaround to avoid: https://github.com/NixOS/nixpkgs/pull/463867
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "lualine-nvim";
+        src = pkgs.fetchFromGitHub {
+          owner = "nvim-lualine";
+          repo = "lualine.nvim";
+          rev = "master";
+          hash = "sha256-OpLZH+sL5cj2rcP5/T+jDOnuxd1QWLHCt2RzloffZOA=";
+        };
+      })
+      # lualine-nvim # Status bar
       indent-blankline-nvim # Indent guides
       nvim-web-devicons # Icons
 
@@ -56,7 +67,7 @@
       vim-sleuth # Auto-detect indent (tabs vs spaces)
 
       # -- LSP, Formatting & Completion --
-      conform-nvim # Formatting (Modern replacement for null-ls)
+      conform-nvim
       nvim-lspconfig
       nvim-cmp
       cmp-nvim-lsp
