@@ -20,6 +20,7 @@
       nixd
       rust-analyzer
       python313Packages.python-lsp-server
+      elixir-ls
 
       # -- Formatters --
       nixfmt
@@ -28,6 +29,7 @@
       shfmt
       black
       rustfmt
+      elixir
     ];
 
     # 2. Plugins
@@ -48,6 +50,22 @@
       indent-blankline-nvim
       nvim-web-devicons
 
+      # -- Project Management --
+      (pkgs.vimUtils.buildVimPlugin {
+        name = "project-nvim";
+        src = pkgs.fetchFromGitHub {
+          owner = "ahmedkhalf";
+          repo = "project.nvim";
+          rev = "main";
+          hash = "sha256-avV3wMiDbraxW4mqlEsKy0oeewaRj9Q33K8NzWoaptU=";
+        };
+      })
+
+      # -- QOL Plugins --
+      trouble-nvim
+      vim-illuminate
+      leap-nvim
+
       # -- Navigation & Tools --
       vim-tmux-navigator
       telescope-nvim
@@ -60,7 +78,7 @@
       lazygit-nvim
       nvim-treesitter.withAllGrammars
 
-      # -- QOL Plugins --
+      # -- QOL Editor --
       nvim-autopairs
       nvim-surround
       vim-sleuth
@@ -78,10 +96,9 @@
       luasnip
       cmp_luasnip
       friendly-snippets
-
-      # New Additions for visuals/help
-      lspkind-nvim # Icons in menu
-      cmp-nvim-lsp-signature-help # Function arg popups
+      lspkind-nvim
+      cmp-nvim-lsp-signature-help
+      cmp-treesitter
     ];
 
     # 3. Lua Configuration
@@ -95,24 +112,39 @@
       vim.opt.clipboard = "unnamedplus"
       vim.opt.termguicolors = true
       vim.g.mapleader = " "
-
-      -- Vertical Line & Scrolloff
       vim.opt.colorcolumn = "100"
       vim.opt.scrolloff = 10
 
       -- ====================
-      -- Theme: Everforest
+      -- Theme
       -- ====================
       vim.g.everforest_background = 'hard'
       vim.g.everforest_enable_italic = 1
-      vim.g.everforest_better_performance = 1
       vim.g.everforest_ui_contrast = 'high'
-
       vim.o.background = 'light'
       vim.cmd('colorscheme everforest')
 
       -- ====================
-      -- Plugin: Conform (Formatting)
+      -- Project Config
+      -- ====================
+      require("project_nvim").setup({
+        detection_methods = { "pattern" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix", "mix.exs" },
+      })
+
+      require('telescope').load_extension('projects')
+
+      -- ====================
+      -- Leap (Motion) Setup - FIXED
+      -- ====================
+      -- The default mappings function is deprecated.
+      -- We now set the keybindings manually as per the official documentation.
+      vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
+      vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
+      vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
+
+      -- ====================
+      -- Formatting
       -- ====================
       require("conform").setup({
           formatters_by_ft = {
@@ -126,21 +158,49 @@
               sh = { "shfmt" },
               rust = { "rustfmt" },
               python = { "black" },
+              elixir = { "mix" },
           },
-          format_on_save = {
-              timeout_ms = 500,
-              lsp_fallback = true,
-          },
+          format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
 
-      -- ====================
-      -- QOL Plugins Setup
-      -- ====================
       require("nvim-autopairs").setup()
       require("nvim-surround").setup()
-      require("gitsigns").setup()
       require("todo-comments").setup()
       require("ibl").setup()
+      require("trouble").setup()
+
+      -- ====================
+      -- Gitsigns
+      -- ====================
+      require('gitsigns').setup({
+        signs = {
+          add          = { text = '│' },
+          change       = { text = '│' },
+          delete       = { text = '_' },
+          topdelete    = { text = '‾' },
+          changedelete = { text = '~' },
+          untracked    = { text = '┆' },
+        },
+        signcolumn = true,
+        numhl      = false,
+        linehl     = false,
+        word_diff  = false,
+        watch_gitdir = { follow_files = true },
+        auto_attach = true,
+        current_line_blame = false,
+        current_line_blame_opts = {
+          virt_text = true,
+          virt_text_pos = 'eol',
+          delay = 1000,
+        },
+        preview_config = {
+          border = 'single',
+          style = 'minimal',
+          relative = 'cursor',
+          row = 0,
+          col = 1
+        },
+      })
 
       require('lualine').setup({
           options = { 
@@ -152,59 +212,60 @@
 
       require("neo-tree").setup({
           close_if_last_window = true,
+          window = { width = 25 },
+          filesystem = { hijack_netrw_behavior = "disabled" },
       })
 
       -- ====================
-      -- Plugin: WhichKey & Keybindings
+      -- Keybindings
       -- ====================
       local wk = require("which-key")
       local builtin = require('telescope.builtin')
 
-      wk.setup({
-          preset = "modern",
-      })
+      wk.setup({ preset = "modern" })
 
       wk.add({
-          -- File Group
           { "<leader>f", group = "Find/Files" }, 
           { "<leader>ff", builtin.find_files, desc = "Find File" },
           { "<leader>fg", builtin.live_grep, desc = "Live Grep" },
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
+          { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
-          { "<leader>fn", ":enew<CR>", desc = "New File" },
-
-          -- Code Group
+          
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
           
-          -- Git Group
+          { "<leader>x", group = "Diagnostics" },
+          { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
+          { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
+
           { "<leader>g", group = "Git" },
           { "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit" },
-          { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "View Diff" },
+          { "<leader>gj", ":Gitsigns next_hunk<CR>", desc = "Next Hunk" },
+          { "<leader>gk", ":Gitsigns prev_hunk<CR>", desc = "Prev Hunk" },
+          { "<leader>gs", ":Gitsigns stage_hunk<CR>", desc = "Stage Hunk" },
+          { "<leader>gr", ":Gitsigns reset_hunk<CR>", desc = "Reset Hunk" },
+          { "<leader>gp", ":Gitsigns preview_hunk<CR>", desc = "Preview Hunk" },
+          { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
+          { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
+          { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
           
-          -- Explorer Group
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
-          
-          -- System Group
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
       })
 
-      -- Standard LSP Bindings (No Leader)
-      -- K for Hover info, gd for Go to Definition
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP Hover Info" })
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to Definition" })
 
       -- ====================
-      -- LSP Setup
+      -- LSP & Completion
       -- ====================
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      -- Added 'pylsp' and removed typo 'nixl'
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then
@@ -215,26 +276,29 @@
           end
       end
 
-      -- ====================
-      -- Completion (CMP) with Icons
-      -- ====================
       local cmp = require('cmp')
       local luasnip = require('luasnip')
-      local lspkind = require('lspkind') -- Icon provider
+      local lspkind = require('lspkind') 
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
-          snippet = {
-              expand = function(args) luasnip.lsp_expand(args.body) end,
-          },
-          -- Add Icons to the menu
+          snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
           formatting = {
-              format = lspkind.cmp_format({
-                  mode = 'symbol_text',
-                  maxwidth = 50,
-                  ellipsis_char = '...',
-              })
+              format = lspkind.cmp_format({ mode = 'symbol_text', maxwidth = 50 })
+          },
+          sorting = {
+            comparators = {
+              cmp.config.compare.offset,
+              cmp.config.compare.exact,
+              cmp.config.compare.score,
+              cmp.config.compare.recently_used,
+              cmp.config.compare.locality,
+              cmp.config.compare.kind,
+              cmp.config.compare.sort_text,
+              cmp.config.compare.length,
+              cmp.config.compare.order,
+            },
           },
           mapping = cmp.mapping.preset.insert({
               ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -256,8 +320,10 @@
           }),
           sources = cmp.config.sources({
               { name = 'nvim_lsp' },
-              { name = 'nvim_lsp_signature_help' }, -- Function arg hints
+              { name = 'nvim_lsp_signature_help' },
+              { name = 'treesitter' },
               { name = 'luasnip' },
+              { name = 'path' },
           }, {
               { name = 'buffer' },
           })
