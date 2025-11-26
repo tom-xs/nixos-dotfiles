@@ -49,6 +49,7 @@
       nvim-web-devicons
 
       # -- Navigation & Tools --
+      vim-tmux-navigator
       telescope-nvim
       plenary-nvim
       neo-tree-nvim

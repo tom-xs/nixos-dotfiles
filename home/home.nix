@@ -15,6 +15,7 @@
     ./waybar.nix
     ./neovim.nix
     ./shell.nix
+    ./tmux.nix
   ];
 
   # User Packages
