@@ -17,14 +17,12 @@
     # 2. Plugins
     plugins = with pkgs.tmuxPlugins; [
       sensible
-      vim-tmux-navigator
       yank
     ];
 
     # 3. Extra Config
     extraConfig = ''
-      # --- Core Bindings ---
-      # Better Splitting (Keep current path)
+      # --- Split bindings ---
       bind | split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
       unbind '"'
@@ -33,39 +31,34 @@
       # Reload config
       bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"
 
-      # --- Navigation (Alt + Keys) ---
-      # 1. Arrow Keys
-      bind -n M-Left select-pane -L
-      bind -n M-Right select-pane -R
-      bind -n M-Up select-pane -U
-      bind -n M-Down select-pane -D
+      # --- Smart Pane Switching (Alt+h/j/k/l) ---
+      # This allows seamless navigation between Vim and Tmux using Alt
 
-      # 2. Vim Keys
-      bind -n M-h select-pane -L
-      bind -n M-j select-pane -D
-      bind -n M-k select-pane -U
-      bind -n M-l select-pane -R
+      # Logic to check if the current pane is running Vim
+      is_vim="ps -o state= -o comm= -t '#{pane_tty}' \
+          | grep -iqE '^[^TXZ ]+ +(\\S+\\/)?g?(view|n?vim?x?)(diff)?$'"
 
-      # --- THEME & LAYOUT (Everforest Light) ---
-      # 1. Bar Position: Top (Separates bar from prompt)
+      # Bind Alt+h/j/k/l
+      bind-key -n 'M-h' if-shell "$is_vim" 'send-keys M-h'  'select-pane -L'
+      bind-key -n 'M-j' if-shell "$is_vim" 'send-keys M-j'  'select-pane -D'
+      bind-key -n 'M-k' if-shell "$is_vim" 'send-keys M-k'  'select-pane -U'
+      bind-key -n 'M-l' if-shell "$is_vim" 'send-keys M-l'  'select-pane -R'
+
+      # Bind Alt+Arrows
+      bind-key -n 'M-Left'  if-shell "$is_vim" 'send-keys M-Left'  'select-pane -L'
+      bind-key -n 'M-Down'  if-shell "$is_vim" 'send-keys M-Down'  'select-pane -D'
+      bind-key -n 'M-Up'    if-shell "$is_vim" 'send-keys M-Up'    'select-pane -U'
+      bind-key -n 'M-Right' if-shell "$is_vim" 'send-keys M-Right' 'select-pane -R'
+
+      # --- Theme & Layout ---
       set -g status-position bottom
       set -g status-justify left
-
-      # 2. Bar Style: Distinct background for separation
-      # bg=#efebd4 is a soft cream color from the theme
       set -g status-style 'bg=#efebd4 fg=#5c6a72'
-
-      # 3. Window Tabs
       set -g window-status-format ' #I:#W '
       set -g window-status-current-format ' #I:#W '
-      # Active window gets the Green accent
       set -g window-status-current-style 'bg=#a7c080 fg=#2d353b bold'
-
-      # 4. Pane Borders (The lines between panels)
-      set -g pane-border-style 'fg=#d3c6aa'        # Inactive borders (Grey)
-      set -g pane-active-border-style 'fg=#a7c080' # Active border (Green)
-
-      # 5. Right Side Info (Date/Time)
+      set -g pane-border-style 'fg=#d3c6aa'
+      set -g pane-active-border-style 'fg=#a7c080'
       set -g status-right '#[fg=#5c6a72] %Y-%m-%d %H:%M '
       set -g status-left ' '
     '';

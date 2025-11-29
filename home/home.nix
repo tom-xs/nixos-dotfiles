@@ -38,6 +38,7 @@
       httpie
       obsidian
       zotero
+      calibre
     ];
 
   systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ ];

@@ -116,6 +116,18 @@
       vim.opt.scrolloff = 10
 
       -- ====================
+      -- Tmux Navigation (Alt Keys)
+      -- ====================
+      -- Disable default mappings (Ctrl+h/j/k/l)
+      vim.g.tmux_navigator_no_mappings = 1
+
+      -- Add Alt mappings
+      vim.keymap.set({'n', 't'}, '<M-h>', '<cmd>TmuxNavigateLeft<cr>')
+      vim.keymap.set({'n', 't'}, '<M-j>', '<cmd>TmuxNavigateDown<cr>')
+      vim.keymap.set({'n', 't'}, '<M-k>', '<cmd>TmuxNavigateUp<cr>')
+      vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
+
+      -- ====================
       -- Theme
       -- ====================
       vim.g.everforest_background = 'hard'
