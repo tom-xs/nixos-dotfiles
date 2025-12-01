@@ -137,6 +137,21 @@
       vim.cmd('colorscheme everforest')
 
       -- ====================
+      -- Treesitter Configuration
+      -- ====================
+      require'nvim-treesitter.configs'.setup {
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+        indent = {
+          enable = true,
+        },
+        ensure_installed = {}, -- Managed by Nix
+        auto_install = false,
+      }
+
+      -- ====================
       -- Project Config
       -- ====================
       require("project_nvim").setup({
@@ -147,10 +162,8 @@
       require('telescope').load_extension('projects')
 
       -- ====================
-      -- Leap (Motion) Setup - FIXED
+      -- Leap (Motion) Setup
       -- ====================
-      -- The default mappings function is deprecated.
-      -- We now set the keybindings manually as per the official documentation.
       vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
       vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
       vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
