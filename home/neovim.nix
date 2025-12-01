@@ -128,6 +128,21 @@
       vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
 
       -- ====================
+      -- Ergonomic Remaps (Save Pinkies)
+      -- ====================
+
+      -- 1. Alternative Enter: Alt+m behaves exactly like Enter
+      -- Works in Normal, Insert, and Command modes
+      vim.keymap.set({'n', 'i', 'c'}, '<M-m>', '<CR>', { desc = "Alt-Enter" })
+
+      -- 2. Alternative Escape: jk or jj 
+      -- A classic remap to avoid reaching for ESC
+      vim.keymap.set('i', 'jj', '<Esc>', { desc = "Quick Escape" })
+      vim.keymap.set('i', 'jk', '<Esc>', { desc = "Quick Escape" })
+
+      -- 3. Save with Ctrl+s (if Caps is now Ctrl, this is very fast)
+      vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
+      -- ====================
       -- Theme
       -- ====================
       vim.g.everforest_background = 'hard'
@@ -256,13 +271,13 @@
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
           { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
-          
+
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
-          
+
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
@@ -277,7 +292,7 @@
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
           { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
           { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
-          
+
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },

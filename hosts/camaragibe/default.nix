@@ -59,6 +59,9 @@
   services.xserver.xkb = {
     layout = "br";
     variant = "";
+
+    # Remap caps to Ctrl
+    options = "ctrl:nocaps";
   };
 
   # Configure console keymap
