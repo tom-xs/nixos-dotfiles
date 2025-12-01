@@ -66,7 +66,10 @@
   programs.kitty = {
     enable = true;
     themeFile = "everforest_light_hard";
-    extraConfig = ''confirm_os_window_close 0'';
+    extraConfig = ''
+      confirm_os_window_close 0
+      disable_ligatures always
+    '';
     font = {
       name = "JetBrains Mono NerdFont";
       size = 12;
