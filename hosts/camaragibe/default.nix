@@ -33,6 +33,13 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # Enable the Display Manager
+  services.displayManager.sddm = {
+    enable = true;
+    wayland.enable = true;
+    theme = "breeze";
+  };
+
   # Enable networking
   networking.networkmanager.enable = true;
   networking.hostName = "camaragibe";

@@ -39,6 +39,7 @@
       obsidian
       zotero
       calibre
+      gimp
     ];
 
   systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ ];

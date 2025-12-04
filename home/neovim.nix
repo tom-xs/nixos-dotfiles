@@ -76,6 +76,8 @@
       gitsigns-nvim
       todo-comments-nvim
       lazygit-nvim
+
+      # Install ALL grammars
       nvim-treesitter.withAllGrammars
 
       # -- QOL Editor --
@@ -116,33 +118,6 @@
       vim.opt.scrolloff = 10
 
       -- ====================
-      -- Tmux Navigation (Alt Keys)
-      -- ====================
-      -- Disable default mappings (Ctrl+h/j/k/l)
-      vim.g.tmux_navigator_no_mappings = 1
-
-      -- Add Alt mappings
-      vim.keymap.set({'n', 't'}, '<M-h>', '<cmd>TmuxNavigateLeft<cr>')
-      vim.keymap.set({'n', 't'}, '<M-j>', '<cmd>TmuxNavigateDown<cr>')
-      vim.keymap.set({'n', 't'}, '<M-k>', '<cmd>TmuxNavigateUp<cr>')
-      vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
-
-      -- ====================
-      -- Ergonomic Remaps (Save Pinkies)
-      -- ====================
-
-      -- 1. Alternative Enter: Alt+m behaves exactly like Enter
-      -- Works in Normal, Insert, and Command modes
-      vim.keymap.set({'n', 'i', 'c'}, '<M-m>', '<CR>', { desc = "Alt-Enter" })
-
-      -- 2. Alternative Escape: jk or jj 
-      -- A classic remap to avoid reaching for ESC
-      vim.keymap.set('i', 'jj', '<Esc>', { desc = "Quick Escape" })
-      vim.keymap.set('i', 'jk', '<Esc>', { desc = "Quick Escape" })
-
-      -- 3. Save with Ctrl+s (if Caps is now Ctrl, this is very fast)
-      vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
-      -- ====================
       -- Theme
       -- ====================
       vim.g.everforest_background = 'hard'
@@ -152,19 +127,31 @@
       vim.cmd('colorscheme everforest')
 
       -- ====================
+      -- Diagnostics Config (RESTORED)
+      -- ====================
+      vim.diagnostic.config({
+        virtual_text = {
+          prefix = '●', -- Shows a dot before the error message inline
+          source = "if_many",
+        },
+        signs = true,
+        underline = true,
+        update_in_insert = false,
+        severity_sort = true,
+      })
+
+      -- ====================
       -- Treesitter Configuration
       -- ====================
-      require'nvim-treesitter.configs'.setup {
+      require('nvim-treesitter.configs').setup({
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
-        indent = {
-          enable = true,
-        },
-        ensure_installed = {}, -- Managed by Nix
+        indent = { enable = true },
+        ensure_installed = {}, 
         auto_install = false,
-      }
+      })
 
       -- ====================
       -- Project Config
@@ -271,17 +258,17 @@
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
           { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
-
+          
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
-
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
-
+          -- Added Toggle Key:
+          { "<leader>xt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = "Toggle Diagnostics" },
           { "<leader>g", group = "Git" },
           { "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit" },
           { "<leader>gj", ":Gitsigns next_hunk<CR>", desc = "Next Hunk" },
@@ -292,7 +279,6 @@
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
           { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
           { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
-
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
@@ -300,6 +286,23 @@
 
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP Hover Info" })
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to Definition" })
+
+      -- ====================
+      -- Ergonomic Remaps
+      -- ====================
+      vim.keymap.set({'n', 'i', 'c'}, '<M-m>', '<CR>', { desc = "Alt-Enter" })
+      vim.keymap.set('i', 'jj', '<Esc>', { desc = "Quick Escape" })
+      vim.keymap.set('i', 'jk', '<Esc>', { desc = "Quick Escape" })
+      vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
+
+      -- ====================
+      -- Tmux Navigation (Alt Keys)
+      -- ====================
+      vim.g.tmux_navigator_no_mappings = 1
+      vim.keymap.set({'n', 't'}, '<M-h>', '<cmd>TmuxNavigateLeft<cr>')
+      vim.keymap.set({'n', 't'}, '<M-j>', '<cmd>TmuxNavigateDown<cr>')
+      vim.keymap.set({'n', 't'}, '<M-k>', '<cmd>TmuxNavigateUp<cr>')
+      vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
 
       -- ====================
       -- LSP & Completion

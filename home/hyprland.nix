@@ -86,7 +86,7 @@
       input = {
         kb_layout = "br";
         kb_variant = "";
-        kb_options = "";
+        kb_options = "ctrl:nocaps";
         follow_mouse = "1";
         touchpad.natural_scroll = true;
       };
