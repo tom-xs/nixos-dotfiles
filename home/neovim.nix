@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  themeVariant,
+  ...
+}:
 
 {
   programs.neovim = {
@@ -124,6 +129,10 @@
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_ui_contrast = 'high'
       vim.o.background = 'light'
+      vim.cmd('colorscheme everforest')
+
+      -- DYNAMIC THEME SELECTION
+      vim.o.background = '${themeVariant}' -- This becomes 'light' or 'dark'
       vim.cmd('colorscheme everforest')
 
       -- ====================

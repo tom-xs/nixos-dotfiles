@@ -15,6 +15,7 @@
     ./waybar.nix
     ./neovim.nix
     ./shell.nix
+    ./kitty.nix
     ./tmux.nix
   ];
 
@@ -60,20 +61,6 @@
     settings.user = {
       Name = "Tomas Xavier Santos";
       Email = "tom.xaviersantos@gmail.com";
-    };
-  };
-
-  # Kitty
-  programs.kitty = {
-    enable = true;
-    themeFile = "everforest_light_hard";
-    extraConfig = ''
-      confirm_os_window_close 0
-      disable_ligatures always
-    '';
-    font = {
-      name = "JetBrains Mono NerdFont";
-      size = 12;
     };
   };
 

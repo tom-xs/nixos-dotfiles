@@ -2,15 +2,12 @@
   description = "Tomasxs NixOS Flake";
 
   inputs = {
-    # Using unstable as requested for latest packages
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # see: https://github.com/NixOS/nixpkgs/issues/437992#issuecomment-3380880457
     nixpkgs-for-stremio.url = "nixpkgs/5135c59491985879812717f4c9fea69604e7f26f";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs"; # Ensures version compatibility
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -21,18 +18,23 @@
       home-manager,
       ...
     }@inputs:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
     {
+      # 1. NixOS Configuration (Camaragibe)
       nixosConfigurations = {
-        # Host: camaragibe
         camaragibe = nixpkgs.lib.nixosSystem {
-          system = "x86_64-linux";
+          inherit system;
           specialArgs = { inherit inputs; };
+          # Injects "light" theme
+          home-manager.extraSpecialArgs = {
+            inherit inputs;
+            themeVariant = "light";
+          };
           modules = [
-
-            # Host specific config
             ./hosts/camaragibe/default.nix
-
-            # Home Manager Module
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -40,6 +42,22 @@
               home-manager.extraSpecialArgs = { inherit inputs; };
               home-manager.users.tomasxs = import ./home/home.nix;
             }
+          ];
+        };
+      };
+
+      # 2. Standalone Configuration (Moreno)
+      homeConfigurations = {
+        # The format "username@hostname" allows home-manager to auto-detect this config
+        "tomasxs@moreno" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          # Inject "dark" theme here
+          extraSpecialArgs = {
+            inherit inputs;
+            themeVariant = "dark";
+          };
+          modules = [
+            ./hosts/moreno/home.nix
           ];
         };
       };
