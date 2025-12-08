@@ -1,9 +1,34 @@
-{ pkgs, ... }:
+{ pkgs, themeVariant, ... }:
 
+let
+  # Define Color Palettes
+  colors =
+    if themeVariant == "dark" then
+      {
+        # Dark Hard
+        status_bg = "#2d353b";
+        status_fg = "#d3c6aa";
+        window_bg = "#272e33"; # Hard background
+        active_bg = "#a7c080";
+        active_fg = "#272e33";
+        border_inactive = "#475258";
+        border_active = "#a7c080";
+      }
+    else
+      {
+        # Light Hard (Based on your previous config)
+        status_bg = "#efebd4";
+        status_fg = "#5c6a72";
+        window_bg = "#fffbef"; # Hard light background
+        active_bg = "#a7c080";
+        active_fg = "#2d353b";
+        border_inactive = "#d3c6aa";
+        border_active = "#a7c080";
+      };
+in
 {
   programs.tmux = {
     enable = true;
-
     # 1. Core Settings
     shell = "${pkgs.bash}/bin/bash";
     terminal = "screen-256color";
@@ -13,13 +38,11 @@
     escapeTime = 0;
     keyMode = "vi";
     mouse = true;
-
     # 2. Plugins
     plugins = with pkgs.tmuxPlugins; [
       sensible
       yank
     ];
-
     # 3. Extra Config
     extraConfig = ''
       # --- Split bindings ---
@@ -50,16 +73,19 @@
       bind-key -n 'M-Up'    if-shell "$is_vim" 'send-keys M-Up'    'select-pane -U'
       bind-key -n 'M-Right' if-shell "$is_vim" 'send-keys M-Right' 'select-pane -R'
 
-      # --- Theme & Layout ---
+      # --- Theme & Layout (Dynamic: ${themeVariant}) ---
       set -g status-position bottom
       set -g status-justify left
-      set -g status-style 'bg=#efebd4 fg=#5c6a72'
+      set -g status-style 'bg=${colors.status_bg} fg=${colors.status_fg}'
       set -g window-status-format ' #I:#W '
+
       set -g window-status-current-format ' #I:#W '
-      set -g window-status-current-style 'bg=#a7c080 fg=#2d353b bold'
-      set -g pane-border-style 'fg=#d3c6aa'
-      set -g pane-active-border-style 'fg=#a7c080'
-      set -g status-right '#[fg=#5c6a72] %Y-%m-%d %H:%M '
+      set -g window-status-current-style 'bg=${colors.active_bg} fg=${colors.active_fg} bold'
+
+      set -g pane-border-style 'fg=${colors.border_inactive}'
+      set -g pane-active-border-style 'fg=${colors.border_active}'
+
+      set -g status-right '#[fg=${colors.status_fg}] %Y-%m-%d %H:%M '
       set -g status-left ' '
     '';
   };
