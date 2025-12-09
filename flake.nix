@@ -28,18 +28,16 @@
         camaragibe = nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
-          # Injects "light" theme
-          home-manager.extraSpecialArgs = {
-            inherit inputs;
-            themeVariant = "light";
-          };
           modules = [
             ./hosts/camaragibe/default.nix
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = { inherit inputs; };
+              home-manager.extraSpecialArgs = {
+                inherit inputs;
+                themeVariant = "light";
+              };
               home-manager.users.tomasxs = import ./home/home.nix;
             }
           ];

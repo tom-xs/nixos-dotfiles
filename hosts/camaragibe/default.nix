@@ -13,6 +13,7 @@
 
     # Windows Manager
     ../../modules/hyprland.nix
+    ../../modules/hyprland-minimal.nix
   ];
 
   # Bootloader
