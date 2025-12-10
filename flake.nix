@@ -36,7 +36,7 @@
               home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = {
                 inherit inputs;
-                themeVariant = "light";
+                themeVariant = "dark";
               };
               home-manager.users.tomasxs = import ./home/home.nix;
             }
@@ -49,7 +49,6 @@
         # The format "username@hostname" allows home-manager to auto-detect this config
         "tomasxs@moreno" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
-          # Inject "dark" theme here
           extraSpecialArgs = {
             inherit inputs;
             themeVariant = "dark";

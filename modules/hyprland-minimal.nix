@@ -204,7 +204,7 @@ let
         [Desktop Entry]
         Name=Hyprland Minimal
         Comment=Monochrome, No Animations
-        Exec=Hyprland --config /etc/hypr/minimal.conf
+        Exec=env THEME_VARIANT=dark GTK_THEME=Adwaita:dark GTK_APPLICATION_PREFER_DARK_THEME=1 QT_QPA_PLATFORMTHEME=gtk3 Hyprland --config /etc/hypr/minimal.conf
         Type=Application
         EOF
       '';

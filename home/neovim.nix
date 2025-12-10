@@ -74,6 +74,7 @@
       # -- Navigation & Tools --
       vim-tmux-navigator
       telescope-nvim
+      telescope-ui-select-nvim
       plenary-nvim
       neo-tree-nvim
       nui-nvim
@@ -136,11 +137,11 @@
       vim.cmd('colorscheme everforest')
 
       -- ====================
-      -- Diagnostics Config (RESTORED)
+      -- Diagnostics Config
       -- ====================
       vim.diagnostic.config({
         virtual_text = {
-          prefix = '●', -- Shows a dot before the error message inline
+          prefix = '●',
           source = "if_many",
         },
         signs = true,
@@ -170,7 +171,9 @@
         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix", "mix.exs" },
       })
 
+      -- Load Telescope Extensions
       require('telescope').load_extension('projects')
+      require('telescope').load_extension('ui-select')
 
       -- ====================
       -- Leap (Motion) Setup
@@ -273,11 +276,12 @@
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
+          
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
-          -- Added Toggle Key:
           { "<leader>xt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = "Toggle Diagnostics" },
+
           { "<leader>g", group = "Git" },
           { "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit" },
           { "<leader>gj", ":Gitsigns next_hunk<CR>", desc = "Next Hunk" },
@@ -288,6 +292,7 @@
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
           { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
           { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
+          
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
