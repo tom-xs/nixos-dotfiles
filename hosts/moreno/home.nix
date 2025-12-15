@@ -14,6 +14,7 @@
     ../../home/shell.nix
     ../../home/tmux.nix
     ../../home/konsole.nix
+    ../../home/emacs.nix
   ];
 
   # 3. Git Config
