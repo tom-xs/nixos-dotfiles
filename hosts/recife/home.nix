@@ -5,13 +5,15 @@
   home.homeDirectory = "/home/tomasxs";
   home.stateVersion = "25.11";
 
+  home.sessionPath = [ "/home/tomasxs/.local/bin" ];
+
   targets.genericLinux.enable = true;
 
   imports = [
     ../../home/neovim.nix
     ../../home/shell.nix
     ../../home/tmux.nix
-    ../../home/konsole.nix
+    ../../home/kitty.nix
     ../../home/emacs.nix
   ];
 
@@ -26,6 +28,6 @@
   programs.home-manager.enable = true;
 
   programs.bash.shellAliases = {
-    update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@moreno";
+    update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife";
   };
 }

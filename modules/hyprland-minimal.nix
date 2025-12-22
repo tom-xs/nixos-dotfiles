@@ -76,11 +76,11 @@ let
         gaps_in = 2
         gaps_out = 0
         border_size = 1
-        
+
         # White active border, Gray inactive
         col.active_border = rgba(ffffffaa)
         col.inactive_border = rgba(333333aa)
-        
+
         layout = dwindle
     }
 
@@ -88,7 +88,7 @@ let
         rounding = 0
         active_opacity = 1.0
         inactive_opacity = 1.0
-        
+
         # Minimal drop shadow
         shadow {
             enabled = true

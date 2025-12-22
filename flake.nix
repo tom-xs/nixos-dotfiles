@@ -23,7 +23,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      # 1. NixOS Configuration (Camaragibe)
+      # 1. NixOS Configuration
       nixosConfigurations = {
         camaragibe = nixpkgs.lib.nixosSystem {
           inherit system;
@@ -44,9 +44,8 @@
         };
       };
 
-      # 2. Standalone Configuration (Moreno)
+      # 2. Standalone Configurations
       homeConfigurations = {
-        # The format "username@hostname" allows home-manager to auto-detect this config
         "tomasxs@moreno" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
@@ -56,6 +55,22 @@
           modules = [
             ./hosts/moreno/home.nix
           ];
+        };
+        "tomasxs@recife" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+            themeVariant = "dark"; # or "light" if you prefer
+          };
+          modules = [ ./hosts/recife/home.nix ];
+        };
+        "tomasxs@wsl" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+            themeVariant = "dark"; # Defaults to dark theme
+          };
+          modules = [ ./hosts/wsl/home.nix ];
         };
       };
     };
