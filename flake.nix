@@ -4,7 +4,7 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-for-stremio.url = "nixpkgs/5135c59491985879812717f4c9fea69604e7f26f";
-
+    nixgl.url = "github:nix-community/nixGL";
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,11 +16,16 @@
       self,
       nixpkgs,
       home-manager,
+      nixgl,
       ...
     }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+        overlays = [ nixgl.overlay ];
+      };
     in
     {
       # 1. NixOS Configuration
@@ -60,7 +65,7 @@
           inherit pkgs;
           extraSpecialArgs = {
             inherit inputs;
-            themeVariant = "dark"; # or "light" if you prefer
+            themeVariant = "dark";
           };
           modules = [ ./hosts/recife/home.nix ];
         };

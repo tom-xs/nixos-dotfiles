@@ -28,6 +28,6 @@
   programs.home-manager.enable = true;
 
   programs.bash.shellAliases = {
-    update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife";
+    update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
   };
 }
