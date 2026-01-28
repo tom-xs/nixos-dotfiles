@@ -7,6 +7,13 @@
 
   home.sessionPath = [ "/home/tomasxs/.local/bin" ];
 
+  home.packages = with pkgs; [
+    beam.packages.erlang.elixir
+    inotify-tools
+
+    go
+  ];
+
   targets.genericLinux.enable = true;
 
   imports = [

@@ -26,6 +26,7 @@
       rust-analyzer
       python313Packages.python-lsp-server
       elixir-ls
+      gopls
 
       # -- Formatters --
       nixfmt
@@ -35,6 +36,10 @@
       black
       rustfmt
       elixir
+      go
+      delve
+      gofumpt
+      gotools
     ];
 
     # 2. Plugins
@@ -83,7 +88,7 @@
       todo-comments-nvim
       lazygit-nvim
 
-      # Install ALL grammars
+      # Install ALL grammars (Includes Go)
       nvim-treesitter.withAllGrammars
 
       # -- QOL Editor --
@@ -110,7 +115,7 @@
     ];
 
     # 3. Lua Configuration
-    extraLuaConfig = ''
+    initLua = ''
       -- ====================
       -- General Settings
       -- ====================
@@ -153,14 +158,10 @@
       -- ====================
       -- Treesitter Configuration
       -- ====================
-      require('nvim-treesitter.configs').setup({
-        highlight = {
-          enable = true,
-          additional_vim_regex_highlighting = false,
-        },
-        indent = { enable = true },
-        ensure_installed = {}, 
-        auto_install = false,
+      vim.api.nvim_create_autocmd("FileType", {
+        callback = function()
+          pcall(vim.treesitter.start)
+        end,
       })
 
       -- ====================
@@ -168,7 +169,7 @@
       -- ====================
       require("project_nvim").setup({
         detection_methods = { "pattern" },
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix", "mix.exs" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix", "mix.exs", "go.mod" },
       })
 
       -- Load Telescope Extensions
@@ -198,6 +199,7 @@
               rust = { "rustfmt" },
               python = { "black" },
               elixir = { "mix" },
+              go = { "gofumpt", "goimports" }, 
           },
           format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -322,7 +324,7 @@
       -- LSP & Completion
       -- ====================
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then
