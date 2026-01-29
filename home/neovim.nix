@@ -36,6 +36,7 @@
       black
       rustfmt
       elixir
+      # -- Go Tools --
       go
       delve
       gofumpt
@@ -88,7 +89,7 @@
       todo-comments-nvim
       lazygit-nvim
 
-      # Install ALL grammars (Includes Go)
+      # Install ALL grammars
       nvim-treesitter.withAllGrammars
 
       # -- QOL Editor --
@@ -129,16 +130,25 @@
       vim.opt.scrolloff = 10
 
       -- ====================
+      -- Go Indentation Fix
+      -- ====================
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "go",
+        callback = function()
+          vim.opt_local.tabstop = 4
+          vim.opt_local.shiftwidth = 4
+          vim.opt_local.softtabstop = 4
+          vim.opt_local.expandtab = false
+        end,
+      })
+
+      -- ====================
       -- Theme
       -- ====================
       vim.g.everforest_background = 'hard'
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_ui_contrast = 'high'
-      vim.o.background = 'light'
-      vim.cmd('colorscheme everforest')
-
-      -- DYNAMIC THEME SELECTION
-      vim.o.background = '${themeVariant}' -- This becomes 'light' or 'dark'
+      vim.o.background = '${themeVariant}' 
       vim.cmd('colorscheme everforest')
 
       -- ====================
@@ -169,10 +179,9 @@
       -- ====================
       require("project_nvim").setup({
         detection_methods = { "pattern" },
-        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json", "flake.nix", "mix.exs", "go.mod" },
+        patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "flake.nix", "mix.exs" },
       })
 
-      -- Load Telescope Extensions
       require('telescope').load_extension('projects')
       require('telescope').load_extension('ui-select')
 
@@ -199,7 +208,7 @@
               rust = { "rustfmt" },
               python = { "black" },
               elixir = { "mix" },
-              go = { "gofumpt", "goimports" }, 
+              go = { "gofumpt", "goimports" },
           },
           format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -312,7 +321,7 @@
       vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
 
       -- ====================
-      -- Tmux Navigation (Alt Keys)
+      -- Tmux Navigation
       -- ====================
       vim.g.tmux_navigator_no_mappings = 1
       vim.keymap.set({'n', 't'}, '<M-h>', '<cmd>TmuxNavigateLeft<cr>')
