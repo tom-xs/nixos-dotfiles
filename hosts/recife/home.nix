@@ -12,6 +12,9 @@
     inotify-tools
 
     go
+    nil
+    nixd
+    zed-editor
   ];
 
   targets.genericLinux.enable = true;
@@ -36,5 +39,19 @@
 
   programs.bash.shellAliases = {
     update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
+  };
+
+  programs.zed-editor = {
+    enable = true;
+    extensions = [ "nix" ];
+    userSettings = {
+      lsp = {
+        nix = {
+          binary = {
+            path_lookup = true;
+          };
+        };
+      };
+    };
   };
 }
