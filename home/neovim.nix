@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  lib,
   themeVariant,
   ...
 }:
@@ -113,6 +114,8 @@
       lspkind-nvim
       cmp-nvim-lsp-signature-help
       cmp-treesitter
+
+      copilot-vim
     ];
 
     # 3. Lua Configuration
@@ -148,7 +151,7 @@
       vim.g.everforest_background = 'hard'
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_ui_contrast = 'high'
-      vim.o.background = '${themeVariant}' 
+      vim.o.background = '${themeVariant}'
       vim.cmd('colorscheme everforest')
 
       -- ====================
@@ -253,7 +256,7 @@
       })
 
       require('lualine').setup({
-          options = { 
+          options = {
               theme = 'everforest',
               section_separators = { left = '', right = '' },
               component_separators = { left = '', right = '' }
@@ -263,7 +266,14 @@
       require("neo-tree").setup({
           close_if_last_window = true,
           window = { width = 25 },
-          filesystem = { hijack_netrw_behavior = "disabled" },
+          filesystem = {
+              hijack_netrw_behavior = "disabled",
+              filtered_items = {
+                  visible = true,
+                  hide_dotfiles = false,
+                  hide_gitignored = false,
+              },
+          },
       })
 
       -- ====================
@@ -275,19 +285,19 @@
       wk.setup({ preset = "modern" })
 
       wk.add({
-          { "<leader>f", group = "Find/Files" }, 
+          { "<leader>f", group = "Find/Files" },
           { "<leader>ff", builtin.find_files, desc = "Find File" },
           { "<leader>fg", builtin.live_grep, desc = "Live Grep" },
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
           { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
-          
+
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
-          
+
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
@@ -303,7 +313,7 @@
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
           { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
           { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
-          
+
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
@@ -346,7 +356,7 @@
 
       local cmp = require('cmp')
       local luasnip = require('luasnip')
-      local lspkind = require('lspkind') 
+      local lspkind = require('lspkind')
 
       require("luasnip.loaders.from_vscode").lazy_load()
 
@@ -396,6 +406,13 @@
               { name = 'buffer' },
           })
       })
+
+      -- ====================
+      -- GitHub Copilot Configuration
+      -- ====================
+      -- Disable default mapping to customize if needed
+      vim.g.copilot_no_tab_map = false
+      vim.g.copilot_assume_mapped = true
     '';
   };
 }

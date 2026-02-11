@@ -15,6 +15,7 @@
     nil
     nixd
     zed-editor
+    github-copilot-cli
   ];
 
   targets.genericLinux.enable = true;
