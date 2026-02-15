@@ -1,7 +1,5 @@
 {
-  config,
   pkgs,
-  lib,
   themeVariant,
   ...
 }:
@@ -13,14 +11,11 @@
     viAlias = true;
     vimAlias = true;
 
-    # 1. Essential tools & External Binaries
     extraPackages = with pkgs; [
       ripgrep
       fd
       xclip
       lazygit
-
-      # -- Language Servers --
       lua-language-server
       nil
       nixd
@@ -28,8 +23,6 @@
       python313Packages.python-lsp-server
       elixir-ls
       gopls
-
-      # -- Formatters --
       nixfmt
       stylua
       prettierd
@@ -37,19 +30,14 @@
       black
       rustfmt
       elixir
-      # -- Go Tools --
       go
       delve
       gofumpt
       gotools
     ];
 
-    # 2. Plugins
     plugins = with pkgs.vimPlugins; [
-      # -- Theme --
       everforest
-
-      # -- UI Improvements --
       (pkgs.vimUtils.buildVimPlugin {
         name = "lualine-nvim";
         src = pkgs.fetchFromGitHub {
@@ -61,8 +49,6 @@
       })
       indent-blankline-nvim
       nvim-web-devicons
-
-      # -- Project Management --
       (pkgs.vimUtils.buildVimPlugin {
         name = "project-nvim";
         src = pkgs.fetchFromGitHub {
@@ -72,13 +58,9 @@
           hash = "sha256-avV3wMiDbraxW4mqlEsKy0oeewaRj9Q33K8NzWoaptU=";
         };
       })
-
-      # -- QOL Plugins --
       trouble-nvim
       vim-illuminate
       leap-nvim
-
-      # -- Navigation & Tools --
       vim-tmux-navigator
       telescope-nvim
       telescope-ui-select-nvim
@@ -89,20 +71,12 @@
       gitsigns-nvim
       todo-comments-nvim
       lazygit-nvim
-
-      # Install ALL grammars
       nvim-treesitter.withAllGrammars
-
-      # -- QOL Editor --
       nvim-autopairs
       nvim-surround
       vim-sleuth
-
-      # -- LSP, Formatting & Completion --
       conform-nvim
       nvim-lspconfig
-
-      # Completion Plugins
       nvim-cmp
       cmp-nvim-lsp
       cmp-buffer
@@ -115,7 +89,8 @@
       cmp-nvim-lsp-signature-help
       cmp-treesitter
 
-      copilot-vim
+      # Ai Completion
+      codeium-nvim
     ];
 
     # 3. Lua Configuration
@@ -132,9 +107,7 @@
       vim.opt.colorcolumn = "100"
       vim.opt.scrolloff = 10
 
-      -- ====================
-      -- Go Indentation Fix
-      -- ====================
+      -- Go Indentation
       vim.api.nvim_create_autocmd("FileType", {
         pattern = "go",
         callback = function()
@@ -145,59 +118,51 @@
         end,
       })
 
-      -- ====================
-      -- Theme
-      -- ====================
       vim.g.everforest_background = 'hard'
       vim.g.everforest_enable_italic = 1
       vim.g.everforest_ui_contrast = 'high'
       vim.o.background = '${themeVariant}'
       vim.cmd('colorscheme everforest')
 
-      -- ====================
-      -- Diagnostics Config
-      -- ====================
+      -- Diagnostics
       vim.diagnostic.config({
-        virtual_text = {
-          prefix = '●',
-          source = "if_many",
-        },
+        virtual_text = { prefix = '●', source = "if_many" },
         signs = true,
         underline = true,
         update_in_insert = false,
         severity_sort = true,
       })
 
-      -- ====================
-      -- Treesitter Configuration
-      -- ====================
+      -- Treesitter
       vim.api.nvim_create_autocmd("FileType", {
-        callback = function()
-          pcall(vim.treesitter.start)
-        end,
+        callback = function() pcall(vim.treesitter.start) end,
       })
 
-      -- ====================
-      -- Project Config
-      -- ====================
+      -- Project
       require("project_nvim").setup({
         detection_methods = { "pattern" },
         patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "flake.nix", "mix.exs" },
       })
-
       require('telescope').load_extension('projects')
       require('telescope').load_extension('ui-select')
 
-      -- ====================
-      -- Leap (Motion) Setup
-      -- ====================
+      -- Leap
       vim.keymap.set({'n', 'x', 'o'}, 's',  '<Plug>(leap-forward)')
       vim.keymap.set({'n', 'x', 'o'}, 'S',  '<Plug>(leap-backward)')
       vim.keymap.set({'n', 'x', 'o'}, 'gs', '<Plug>(leap-from-window)')
 
-      -- ====================
+      -- Smart gx
+      vim.keymap.set("n", "gx", function()
+        local path = vim.fn.expand("<cfile>")
+        if path:match("https?://") or path:match("www%.") then
+          vim.ui.open(path)
+        else
+          if vim.fn.filereadable(path) == 1 then vim.cmd("edit " .. path)
+          else vim.notify("File not found: " .. path, vim.log.levels.WARN) end
+        end
+      end, { desc = "Smart gx" })
+
       -- Formatting
-      -- ====================
       require("conform").setup({
           formatters_by_ft = {
               lua = { "stylua" },
@@ -222,9 +187,7 @@
       require("ibl").setup()
       require("trouble").setup()
 
-      -- ====================
       -- Gitsigns
-      -- ====================
       require('gitsigns').setup({
         signs = {
           add          = { text = '│' },
@@ -235,55 +198,24 @@
           untracked    = { text = '┆' },
         },
         signcolumn = true,
-        numhl      = false,
-        linehl     = false,
-        word_diff  = false,
         watch_gitdir = { follow_files = true },
         auto_attach = true,
-        current_line_blame = false,
-        current_line_blame_opts = {
-          virt_text = true,
-          virt_text_pos = 'eol',
-          delay = 1000,
-        },
-        preview_config = {
-          border = 'single',
-          style = 'minimal',
-          relative = 'cursor',
-          row = 0,
-          col = 1
-        },
       })
 
       require('lualine').setup({
-          options = {
-              theme = 'everforest',
-              section_separators = { left = '', right = '' },
-              component_separators = { left = '', right = '' }
-          }
+          options = { theme = 'everforest' }
       })
 
       require("neo-tree").setup({
           close_if_last_window = true,
           window = { width = 25 },
-          filesystem = {
-              hijack_netrw_behavior = "disabled",
-              filtered_items = {
-                  visible = true,
-                  hide_dotfiles = false,
-                  hide_gitignored = false,
-              },
-          },
+          filesystem = { hijack_netrw_behavior = "disabled" },
       })
 
-      -- ====================
       -- Keybindings
-      -- ====================
       local wk = require("which-key")
       local builtin = require('telescope.builtin')
-
       wk.setup({ preset = "modern" })
-
       wk.add({
           { "<leader>f", group = "Find/Files" },
           { "<leader>ff", builtin.find_files, desc = "Find File" },
@@ -291,18 +223,15 @@
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
           { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
-
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
-
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
           { "<leader>xt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = "Toggle Diagnostics" },
-
           { "<leader>g", group = "Git" },
           { "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit" },
           { "<leader>gj", ":Gitsigns next_hunk<CR>", desc = "Next Hunk" },
@@ -311,9 +240,6 @@
           { "<leader>gr", ":Gitsigns reset_hunk<CR>", desc = "Reset Hunk" },
           { "<leader>gp", ":Gitsigns preview_hunk<CR>", desc = "Preview Hunk" },
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
-          { "<leader>gd", ":Gitsigns diffthis<CR>", desc = "Diff This" },
-          { "<leader>gtb", ":Gitsigns toggle_current_line_blame<CR>", desc = "Toggle Blame" },
-
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
@@ -321,18 +247,12 @@
 
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP Hover Info" })
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to Definition" })
-
-      -- ====================
-      -- Ergonomic Remaps
-      -- ====================
       vim.keymap.set({'n', 'i', 'c'}, '<M-m>', '<CR>', { desc = "Alt-Enter" })
       vim.keymap.set('i', 'jj', '<Esc>', { desc = "Quick Escape" })
       vim.keymap.set('i', 'jk', '<Esc>', { desc = "Quick Escape" })
       vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
 
-      -- ====================
       -- Tmux Navigation
-      -- ====================
       vim.g.tmux_navigator_no_mappings = 1
       vim.keymap.set({'n', 't'}, '<M-h>', '<cmd>TmuxNavigateLeft<cr>')
       vim.keymap.set({'n', 't'}, '<M-j>', '<cmd>TmuxNavigateDown<cr>')
@@ -340,7 +260,28 @@
       vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
 
       -- ====================
-      -- LSP & Completion
+      -- Codeium Setup (Virtual Text Mode)
+      -- ====================
+      require("codeium").setup({
+        enable_chat = true,
+        -- Enable virtual text (Ghost Text) just like Copilot
+        virtual_text = {
+          enabled = true,
+          -- This maps <Tab> to accept the suggestion
+          map_keys = true, 
+          key_bindings = {
+            accept = "<Tab>",
+            accept_word = false,
+            accept_line = false,
+            clear = false,
+            next = "<M-]>",
+            prev = "<M-[>",
+          }
+        }
+      })
+
+      -- ====================
+      -- LSP & CMP
       -- ====================
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls" }
@@ -357,7 +298,6 @@
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
-
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
@@ -365,30 +305,23 @@
           formatting = {
               format = lspkind.cmp_format({ mode = 'symbol_text', maxwidth = 50 })
           },
-          sorting = {
-            comparators = {
-              cmp.config.compare.offset,
-              cmp.config.compare.exact,
-              cmp.config.compare.score,
-              cmp.config.compare.recently_used,
-              cmp.config.compare.locality,
-              cmp.config.compare.kind,
-              cmp.config.compare.sort_text,
-              cmp.config.compare.length,
-              cmp.config.compare.order,
-            },
-          },
+          -- Mappings
           mapping = cmp.mapping.preset.insert({
               ['<C-b>'] = cmp.mapping.scroll_docs(-4),
               ['<C-f>'] = cmp.mapping.scroll_docs(4),
               ['<C-Space>'] = cmp.mapping.complete(),
               ['<CR>'] = cmp.mapping.confirm({ select = true }),
+              
               ['<Tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then cmp.select_next_item()
-                  elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
-                  else fallback()
+                  if cmp.visible() then 
+                      cmp.select_next_item()
+                  elseif luasnip.expand_or_jumpable() then 
+                      luasnip.expand_or_jump()
+                  else
+                      fallback()
                   end
               end, { 'i', 's' }),
+              
               ['<S-Tab>'] = cmp.mapping(function(fallback)
                   if cmp.visible() then cmp.select_prev_item()
                   elseif luasnip.expand_or_jumpable() then luasnip.jump(-1)
@@ -396,6 +329,8 @@
                   end
               end, { 'i', 's' }),
           }),
+          
+          -- SOURCES: Codeium removed from here to prevent duplicate menu items
           sources = cmp.config.sources({
               { name = 'nvim_lsp' },
               { name = 'nvim_lsp_signature_help' },
@@ -406,13 +341,6 @@
               { name = 'buffer' },
           })
       })
-
-      -- ====================
-      -- GitHub Copilot Configuration
-      -- ====================
-      -- Disable default mapping to customize if needed
-      vim.g.copilot_no_tab_map = false
-      vim.g.copilot_assume_mapped = true
     '';
   };
 }
