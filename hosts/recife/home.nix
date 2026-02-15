@@ -5,7 +5,12 @@
   home.homeDirectory = "/home/tomasxs";
   home.stateVersion = "25.11";
 
-  home.sessionPath = [ "/home/tomasxs/.local/bin" ];
+  home.sessionPath = [
+    "/home/tomasxs/.local/bin"
+    "/opt/android-studio/bin"
+    "/usr/lib/android-sdk/platform-tools"
+    "/usr/lib/android-sdk/tools/bin"
+  ];
 
   home.packages = with pkgs; [
     beam.packages.erlang.elixir
