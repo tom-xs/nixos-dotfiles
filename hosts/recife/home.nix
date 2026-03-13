@@ -15,6 +15,10 @@ in
   home.homeDirectory = "/home/tomasxs";
   home.stateVersion = "25.11";
 
+  home.sessionVariables = {
+    ANDROID_HOME = "/usr/lib/android-sdk";
+  };
+
   home.sessionPath = [
     "/home/tomasxs/.local/bin"
     "/opt/android-studio/bin"
