@@ -1,5 +1,15 @@
 { pkgs, lib, ... }:
 
+let
+  nixpkgs-local = fetchGit {
+    url = "/home/tomasxs/Projects/nixpkgs/";
+    ref = "appium-update";
+  };
+  pkgs-local = import nixpkgs-local {
+    system = builtins.currentSystem;
+    config.allowUnfree = true;
+  };
+in
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
@@ -13,6 +23,7 @@
   ];
 
   home.packages = with pkgs; [
+    nodejs_22
     beam.packages.erlang.elixir
     inotify-tools
 
@@ -21,6 +32,7 @@
     nixd
     zed-editor
     github-copilot-cli
+    pkgs-local.appium
   ];
 
   targets.genericLinux.enable = true;
