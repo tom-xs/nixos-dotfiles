@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   themeVariant,
   ...
@@ -12,6 +13,7 @@
     vimAlias = true;
 
     extraPackages = with pkgs; [
+      nodejs_22
       ripgrep
       fd
       xclip
@@ -88,12 +90,9 @@
       lspkind-nvim
       cmp-nvim-lsp-signature-help
       cmp-treesitter
-
-      # Ai Completion
-      codeium-nvim
+      copilot-lua
     ];
 
-    # 3. Lua Configuration
     initLua = ''
       -- ====================
       -- General Settings
@@ -106,6 +105,10 @@
       vim.g.mapleader = " "
       vim.opt.colorcolumn = "100"
       vim.opt.scrolloff = 10
+
+      -- Smart Search
+      vim.opt.ignorecase = true 
+      vim.opt.smartcase = true  
 
       -- Go Indentation
       vim.api.nvim_create_autocmd("FileType", {
@@ -206,13 +209,23 @@
           options = { theme = 'everforest' }
       })
 
+      -- Neo-Tree
       require("neo-tree").setup({
           close_if_last_window = true,
           window = { width = 25 },
-          filesystem = { hijack_netrw_behavior = "disabled" },
+          filesystem = { 
+              hijack_netrw_behavior = "disabled",
+              filtered_items = {
+                  visible = true,
+                  hide_dotfiles = false,
+                  hide_gitignored = false,
+              },
+          },
       })
 
-      -- Keybindings
+      -- ====================
+      -- Keybindings & Which-Key
+      -- ====================
       local wk = require("which-key")
       local builtin = require('telescope.builtin')
       wk.setup({ preset = "modern" })
@@ -223,15 +236,18 @@
           { "<leader>fb", builtin.buffers, desc = "Find Buffer" },
           { "<leader>fp", ":Telescope projects<CR>", desc = "Switch Project" },
           { "<leader>ft", ":TodoTelescope<CR>", desc = "Find Todos" },
+          
           { "<leader>c", group = "Code" },
           { "<leader>cf", function() require("conform").format({ async = true }) end, desc = "Format File" },
           { "<leader>ca", vim.lsp.buf.code_action, desc = "Code Action" },
           { "<leader>cr", vim.lsp.buf.rename, desc = "Rename Variable" },
           { "<leader>cd", vim.lsp.buf.definition, desc = "Go to Definition" },
+          
           { "<leader>x", group = "Diagnostics" },
           { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Project Diagnostics" },
           { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics" },
           { "<leader>xt", function() vim.diagnostic.enable(not vim.diagnostic.is_enabled()) end, desc = "Toggle Diagnostics" },
+          
           { "<leader>g", group = "Git" },
           { "<leader>gg", ":LazyGit<CR>", desc = "Open LazyGit" },
           { "<leader>gj", ":Gitsigns next_hunk<CR>", desc = "Next Hunk" },
@@ -240,6 +256,16 @@
           { "<leader>gr", ":Gitsigns reset_hunk<CR>", desc = "Reset Hunk" },
           { "<leader>gp", ":Gitsigns preview_hunk<CR>", desc = "Preview Hunk" },
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
+          
+          { "<leader>a", group = "AI (Copilot)" },
+          { "<leader>ae", ":Copilot enable<CR>", desc = "Enable Copilot" },
+          { "<leader>ad", ":Copilot disable<CR>", desc = "Disable Copilot" },
+          { "<leader>at", function() 
+            local cmp = require('cmp')
+            if cmp.visible() then cmp.abort() 
+            else cmp.complete() end
+          end, desc = "Toggle Autocomplete" },
+
           { "<leader>e", ":Neotree toggle<CR>", desc = "Toggle Explorer" },
           { "<leader>q", ":q<CR>", desc = "Quit" },
           { "<leader>w", ":w<CR>", desc = "Save" },
@@ -247,10 +273,15 @@
 
       vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = "LSP Hover Info" })
       vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = "Go to Definition" })
+
+      -- ====================
+      -- Ergonomic Remaps
+      -- ====================
       vim.keymap.set({'n', 'i', 'c'}, '<M-m>', '<CR>', { desc = "Alt-Enter" })
       vim.keymap.set('i', 'jj', '<Esc>', { desc = "Quick Escape" })
       vim.keymap.set('i', 'jk', '<Esc>', { desc = "Quick Escape" })
       vim.keymap.set({'n', 'i', 'v'}, '<C-s>', '<cmd>w<cr><esc>', { desc = "Save File" })
+      vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>', { desc = "Clear Highlights" })
 
       -- Tmux Navigation
       vim.g.tmux_navigator_no_mappings = 1
@@ -259,30 +290,29 @@
       vim.keymap.set({'n', 't'}, '<M-k>', '<cmd>TmuxNavigateUp<cr>')
       vim.keymap.set({'n', 't'}, '<M-l>', '<cmd>TmuxNavigateRight<cr>')
 
-      -- ====================
-      -- Codeium Setup (Virtual Text Mode)
-      -- ====================
-      require("codeium").setup({
-        enable_chat = true,
-        -- Enable virtual text (Ghost Text) just like Copilot
-        virtual_text = {
+      -- Copilot
+      require('copilot').setup({
+        suggestion = {
           enabled = true,
-          -- This maps <Tab> to accept the suggestion
-          map_keys = true, 
-          key_bindings = {
+          auto_trigger = true,
+          debounce = 75,
+          keymap = {
             accept = "<Tab>",
             accept_word = false,
             accept_line = false,
-            clear = false,
             next = "<M-]>",
             prev = "<M-[>",
-          }
-        }
+            dismiss = "<C-]>",
+          },
+        },
+        filetypes = {
+          yaml = false,
+          hcl = false,
+          properties = false,
+        },
       })
 
-      -- ====================
       -- LSP & CMP
-      -- ====================
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls" }
 
@@ -305,7 +335,6 @@
           formatting = {
               format = lspkind.cmp_format({ mode = 'symbol_text', maxwidth = 50 })
           },
-          -- Mappings
           mapping = cmp.mapping.preset.insert({
               ['<C-b>'] = cmp.mapping.scroll_docs(-4),
               ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -330,7 +359,6 @@
               end, { 'i', 's' }),
           }),
           
-          -- SOURCES: Codeium removed from here to prevent duplicate menu items
           sources = cmp.config.sources({
               { name = 'nvim_lsp' },
               { name = 'nvim_lsp_signature_help' },
