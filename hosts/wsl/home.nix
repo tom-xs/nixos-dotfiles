@@ -5,7 +5,7 @@
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
 
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   # 1. Enable Non-NixOS Compatibility (Required for WSL)
   targets.genericLinux.enable = true;

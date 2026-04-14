@@ -13,7 +13,7 @@ in
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
 
   home.sessionVariables = {
     ANDROID_HOME = "/usr/lib/android-sdk";
@@ -36,6 +36,7 @@ in
     nixd
     zed-editor
     github-copilot-cli
+    chromium
     pkgs-local.appium
   ];
 
