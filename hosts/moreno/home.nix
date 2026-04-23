@@ -18,8 +18,8 @@
   programs.git = {
     enable = true;
     settings.user = {
-      Name = "Tomas Xavier Santos";
-      Email = "tom.xaviersantos@gmail.com";
+      name = "Tomas Xavier Santos";
+      email = "tom.xaviersantos@gmail.com";
     };
   };
 

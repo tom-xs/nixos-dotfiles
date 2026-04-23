@@ -13,30 +13,39 @@
     };
   };
 
-  # --- Bash Configuration ---
-  programs.bash = {
+  # --- Fish Shell Configuration ---
+  programs.fish = {
     enable = true;
-    enableCompletion = true;
-    # Aliases
     shellAliases = {
       ll = "ls -l";
       update = "sudo nixos-rebuild switch --flake .#camaragibe";
       gc = "nix-collect-garbage --delete-old";
     };
+
+    interactiveShellInit = ''
+      set fish_greeting # Disable the default fish greeting
+    '';
+  };
+
+  # --- Bash Configuration (Kept for compatibility) ---
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
   };
 
   # Eza (Better ls)
   programs.eza = {
     enable = true;
     enableBashIntegration = true;
+    enableFishIntegration = true;
     icons = "auto";
   };
 
   # Zoxide (Better cd)
   programs.zoxide = {
     enable = true;
-    enableBashIntegration = true;
-    options = [ "--cmd cd" ]; # Replace cd with zoxide
+    enableFishIntegration = true;
+    options = [ "--cmd cd" ];
   };
 
   # Bat (Better cat)
@@ -47,6 +56,6 @@
   # FZF (Fuzzy Finder)
   programs.fzf = {
     enable = true;
-    enableBashIntegration = true;
+    enableFishIntegration = true;
   };
 }

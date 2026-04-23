@@ -104,7 +104,7 @@ update
 
 Switch to configuration:
 ```bash
-home-manager switch --flake ~/nixos-dotfiles#tomasxs@recife
+home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure
 ```
 
 ### WSL (Home Manager only)

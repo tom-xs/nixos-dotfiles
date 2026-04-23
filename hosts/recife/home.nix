@@ -1,4 +1,9 @@
-{ pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   nixpkgs-local = fetchGit {
@@ -16,14 +21,15 @@ in
   home.stateVersion = "26.05";
 
   home.sessionVariables = {
-    ANDROID_HOME = "/usr/lib/android-sdk";
+    ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/Android/Sdk";
   };
 
   home.sessionPath = [
-    "/home/tomasxs/.local/bin"
+    "${config.home.homeDirectory}/.local/bin"
     "/opt/android-studio/bin"
-    "/usr/lib/android-sdk/platform-tools"
-    "/usr/lib/android-sdk/tools/bin"
+    "${config.home.homeDirectory}/Android/Sdk/platform-tools"
+    "${config.home.homeDirectory}/Android/Sdk/cmdline-tools/latest/bin"
   ];
 
   home.packages = with pkgs; [
@@ -34,7 +40,6 @@ in
     go
     nil
     nixd
-    zed-editor
     github-copilot-cli
     chromium
     pkgs-local.appium
@@ -53,14 +58,15 @@ in
   programs.git = {
     enable = true;
     settings.user = {
-      Name = "Tomas Xavier Santos";
-      Email = "tom.xaviersantos@gmail.com";
+      name = "Tomas Xavier Santos";
+      email = "tom.xaviersantos@gmail.com";
     };
   };
 
   programs.home-manager.enable = true;
 
   programs.bash.shellAliases = {
+    # Needed while pkgs-local.appium comes from a local fetchGit source.
     update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
   };
 

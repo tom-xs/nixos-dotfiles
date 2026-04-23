@@ -28,8 +28,8 @@
   programs.git = {
     enable = true;
     settings.user = {
-      Name = "Tomas Xavier Santos";
-      Email = "tom.xaviersantos@gmail.com";
+      name = "Tomas Xavier Santos";
+      email = "tom.xaviersantos@gmail.com";
     };
     # Optional: Use Windows Credential Manager
     extraConfig.credential.helper = "/mnt/c/Program\\ Files/Git/mingw64/libexec/git-core/git-credential-manager.exe";
