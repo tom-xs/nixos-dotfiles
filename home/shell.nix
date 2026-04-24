@@ -18,7 +18,6 @@
     enable = true;
     shellAliases = {
       ll = "ls -l";
-      update = "sudo nixos-rebuild switch --flake .#camaragibe";
       gc = "nix-collect-garbage --delete-old";
     };
 

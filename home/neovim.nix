@@ -297,7 +297,7 @@
           auto_trigger = true,
           debounce = 75,
           keymap = {
-            accept = "<Tab>",
+            accept = false,
             accept_word = false,
             accept_line = false,
             next = "<M-]>",
@@ -328,6 +328,7 @@
       local cmp = require('cmp')
       local luasnip = require('luasnip')
       local lspkind = require('lspkind')
+      local copilot_suggestion = require('copilot.suggestion')
       require("luasnip.loaders.from_vscode").lazy_load()
 
       cmp.setup({
@@ -339,10 +340,18 @@
               ['<C-b>'] = cmp.mapping.scroll_docs(-4),
               ['<C-f>'] = cmp.mapping.scroll_docs(4),
               ['<C-Space>'] = cmp.mapping.complete(),
-              ['<CR>'] = cmp.mapping.confirm({ select = true }),
+              ['<CR>'] = cmp.mapping(function(fallback)
+                  if cmp.visible() then
+                      cmp.confirm({ select = true })
+                  else
+                      fallback()
+                  end
+              end, { 'i', 's' }),
               
               ['<Tab>'] = cmp.mapping(function(fallback)
-                  if cmp.visible() then 
+                  if copilot_suggestion.is_visible() then
+                      copilot_suggestion.accept()
+                  elseif cmp.visible() then 
                       cmp.select_next_item()
                   elseif luasnip.expand_or_jumpable() then 
                       luasnip.expand_or_jump()

@@ -33,6 +33,9 @@ in
   ];
 
   home.packages = with pkgs; [
+    nordic
+    utterly-nord-plasma
+
     nodejs_22
     beam.packages.erlang.elixir
     inotify-tools
@@ -65,8 +68,11 @@ in
 
   programs.home-manager.enable = true;
 
-  programs.bash.shellAliases = {
+  programs.fish.shellAliases = {
     # Needed while pkgs-local.appium comes from a local fetchGit source.
+    update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
+  };
+  programs.bash.shellAliases = {
     update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
   };
 
