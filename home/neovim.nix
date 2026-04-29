@@ -1,7 +1,9 @@
 {
   config,
   pkgs,
+  lib,
   themeVariant,
+  neovimNodeTooling ? true,
   ...
 }:
 
@@ -12,31 +14,40 @@
     viAlias = true;
     vimAlias = true;
 
-    extraPackages = with pkgs; [
-      nodejs_22
-      ripgrep
-      fd
-      xclip
-      lazygit
-      lua-language-server
-      nil
-      nixd
-      rust-analyzer
-      python313Packages.python-lsp-server
-      elixir-ls
-      gopls
-      nixfmt
-      stylua
-      prettierd
-      shfmt
-      black
-      rustfmt
-      elixir
-      go
-      delve
-      gofumpt
-      gotools
-    ];
+    extraPackages =
+      with pkgs;
+      [
+        ripgrep
+        fd
+        xclip
+        lazygit
+        lua-language-server
+        nil
+        nixd
+        rust-analyzer
+        python313Packages.python-lsp-server
+        elixir-ls
+        gopls
+        nixfmt
+        stylua
+        shfmt
+        black
+        rustfmt
+        elixir
+        go
+        delve
+        gofumpt
+        gotools
+        nodejs_22
+      ]
+      ++ lib.optionals neovimNodeTooling [
+        typescript
+        typescript-language-server
+        eslint
+        prettierd
+        playwright-driver
+        cypress
+      ];
 
     plugins = with pkgs.vimPlugins; [
       everforest
@@ -170,11 +181,15 @@
           formatters_by_ft = {
               lua = { "stylua" },
               nix = { "nixfmt" },
-              javascript = { "prettierd" },
-              typescript = { "prettierd" },
-              css = { "prettierd" },
-              html = { "prettierd" },
-              json = { "prettierd" },
+              ${lib.optionalString neovimNodeTooling ''
+                javascript = { "prettierd" },
+                javascriptreact = { "prettierd" },
+                typescript = { "prettierd" },
+                typescriptreact = { "prettierd" },
+                css = { "prettierd" },
+                html = { "prettierd" },
+                json = { "prettierd" },
+              ''}
               sh = { "shfmt" },
               rust = { "rustfmt" },
               python = { "black" },
@@ -228,6 +243,15 @@
       -- ====================
       local wk = require("which-key")
       local builtin = require('telescope.builtin')
+      ${lib.optionalString neovimNodeTooling ''
+
+        local function open_terminal_with(cmd)
+          vim.cmd("botright 12split")
+          vim.cmd("terminal " .. cmd)
+          vim.cmd("startinsert")
+        end
+      ''}
+
       wk.setup({ preset = "modern" })
       wk.add({
           { "<leader>f", group = "Find/Files" },
@@ -256,6 +280,14 @@
           { "<leader>gr", ":Gitsigns reset_hunk<CR>", desc = "Reset Hunk" },
           { "<leader>gp", ":Gitsigns preview_hunk<CR>", desc = "Preview Hunk" },
           { "<leader>gb", ":Gitsigns blame_line<CR>", desc = "Blame Line (Popup)" },
+
+          ${lib.optionalString neovimNodeTooling ''
+            { "<leader>t", group = "Tests/QA" },
+            { "<leader>tp", function() open_terminal_with("npx playwright test") end, desc = "Run Playwright" },
+            { "<leader>tf", function() open_terminal_with("npx playwright test " .. vim.fn.fnameescape(vim.fn.expand("%:p"))) end, desc = "Run Playwright File" },
+            { "<leader>tc", function() open_terminal_with("npx cypress run") end, desc = "Run Cypress" },
+            { "<leader>to", function() open_terminal_with("npx cypress open") end, desc = "Open Cypress UI" },
+          ''}
           
           { "<leader>a", group = "AI (Copilot)" },
           { "<leader>ae", ":Copilot enable<CR>", desc = "Enable Copilot" },
@@ -315,6 +347,11 @@
       -- LSP & CMP
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
       local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls" }
+      if ${
+        if neovimNodeTooling then "true" else "vim.fn.executable(\"typescript-language-server\") == 1"
+      } then
+        table.insert(servers, "ts_ls")
+      end
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then

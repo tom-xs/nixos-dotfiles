@@ -16,6 +16,8 @@ let
   };
 in
 {
+  _module.args.neovimNodeTooling = true;
+
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
   home.stateVersion = "26.05";
@@ -36,7 +38,6 @@ in
     nordic
     utterly-nord-plasma
 
-    nodejs_22
     beam.packages.erlang.elixir
     inotify-tools
 
