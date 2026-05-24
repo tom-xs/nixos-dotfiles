@@ -38,10 +38,6 @@
       gimp
     ];
 
-  systemd.user.services.waybar.Install.WantedBy = lib.mkForce [ ];
-  systemd.user.services.hyprpaper.Install.WantedBy = lib.mkForce [ ];
-  systemd.user.services.hypridle.Install.WantedBy = lib.mkForce [ ];
-
   # Git
   programs.git = {
     enable = true;

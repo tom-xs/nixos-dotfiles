@@ -9,7 +9,7 @@
     ../../modules/nvidia.nix
     ../../modules/maintenance.nix
     ../../modules/gaming.nix
-    ../../modules/common-desktop.nix
+    ../../modules/common-hyper-desktop.nix
 
     # Windows Manager
     ../../modules/hyprland.nix

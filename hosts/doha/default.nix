@@ -8,13 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-    ../../modules/maintenance.nix
-    ../../modules/gaming.nix
-    # ../../home/kitty.nix
-    # ../../home/shell.nix
-    # ../../home/tmux.nix
-    # ../../home/neovim.nix
-    # ./home.nix
+      ../../modules/maintenance.nix
+      ../../modules/gaming.nix
     ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
@@ -122,9 +117,9 @@
     description = "Tomas Xavier Santos";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-    #  thunderbird
-gh
-vscode
+      #  thunderbird
+      gh
+      vscode
     ];
   };
 
@@ -139,7 +134,8 @@ vscode
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-git
+    git
+    gnome-tweaks
   ];
 
   # Some programs need SUID wrappers, can be configured further or are

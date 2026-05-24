@@ -11,8 +11,7 @@
   programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
-    vesktop
-    lutris
+    # lutris
     prismlauncher
     mangohud
   ];
