@@ -30,7 +30,7 @@ in
   programs.tmux = {
     enable = true;
     # 1. Core Settings
-    shell = "${pkgs.bash}/bin/bash";
+    # shell = "${pkgs.bash}/bin/bash";
     terminal = "screen-256color";
     historyLimit = 100000;
     prefix = "C-a";

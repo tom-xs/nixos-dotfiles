@@ -29,6 +29,7 @@ in
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
+    "${config.home.homeDirectory}/go/bin"
     "/opt/android-studio/bin"
     "${config.home.homeDirectory}/Android/Sdk/platform-tools"
     "${config.home.homeDirectory}/Android/Sdk/cmdline-tools/latest/bin"
@@ -46,6 +47,7 @@ in
     nixd
     github-copilot-cli
     chromium
+    telegram-desktop
     pkgs-local.appium
   ];
 
