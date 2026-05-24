@@ -14,7 +14,7 @@
     viAlias = true;
     vimAlias = true;
 
-    extraPackages =
+    package =
       with pkgs;
       [
         ripgrep

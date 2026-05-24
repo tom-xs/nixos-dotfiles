@@ -33,12 +33,12 @@
   };
 
   # Eza (Better ls)
-  programs.eza = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
-    icons = "auto";
-  };
+  #programs.eza = {
+  #  enable = true;
+  #  enableBashIntegration = true;
+  #  enableFishIntegration = true;
+  #  icons = "auto";
+  #};
 
   # Zoxide (Better cd)
   programs.zoxide = {
@@ -53,8 +53,8 @@
   };
 
   # FZF (Fuzzy Finder)
-  programs.fzf = {
-    enable = true;
-    enableFishIntegration = true;
-  };
+  #programs.fzf = {
+  #  enable = true;
+  #  enableFishIntegration = true;
+  #};
 }
