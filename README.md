@@ -9,6 +9,10 @@ This repository manages system and user configurations across multiple machines 
 ## Machines
 
 - **camaragibe**: Full NixOS desktop system with Hyprland wayland compositor, NVIDIA GPU support, gaming tools, and desktop applications
+- **new-machine**: New full NixOS host based on camaragibe, with flavor variants:
+  - `new-machine`: balanced desktop (Hyprland + minimal session)
+  - `new-machine-minimal`: lean desktop profile (Hyprland only)
+  - `new-machine-gaming`: full gaming profile (NVIDIA + gaming stack)
 - **moreno**: Home Manager configuration for non-NixOS Linux systems, focused on development tools
 - **recife**: Standalone Home Manager configuration for a secondary Linux machine
 - **wsl**: Windows Subsystem for Linux configuration with minimal development tools
@@ -87,6 +91,25 @@ Rebuild the system:
 ```bash
 sudo nixos-rebuild switch --flake ~/nixos-dotfiles#camaragibe
 ```
+
+### New Machine (Full NixOS with flavors)
+
+Balanced suggestion:
+```bash
+sudo nixos-rebuild switch --flake ~/nixos-dotfiles#new-machine
+```
+
+Minimal flavor suggestion:
+```bash
+sudo nixos-rebuild switch --flake ~/nixos-dotfiles#new-machine-minimal
+```
+
+Gaming flavor suggestion:
+```bash
+sudo nixos-rebuild switch --flake ~/nixos-dotfiles#new-machine-gaming
+```
+
+> Important: replace `hosts/new-machine/hardware-configuration.nix` with your generated hardware file before first real deployment.
 
 ### Moreno (Home Manager only)
 

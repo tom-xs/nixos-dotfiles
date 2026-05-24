@@ -26,15 +26,13 @@
         config.allowUnfree = true;
         overlays = [ nixgl.overlay ];
       };
-    in
-    {
-      # 1. NixOS Configuration
-      nixosConfigurations = {
-        camaragibe = nixpkgs.lib.nixosSystem {
+      mkNixosHost =
+        hostModule:
+        nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = { inherit inputs; };
           modules = [
-            ./hosts/camaragibe/default.nix
+            hostModule
             home-manager.nixosModules.home-manager
             {
               home-manager.useGlobalPkgs = true;
@@ -47,6 +45,14 @@
             }
           ];
         };
+    in
+    {
+      # 1. NixOS Configuration
+      nixosConfigurations = {
+        camaragibe = mkNixosHost ./hosts/camaragibe/default.nix;
+        new-machine = mkNixosHost ./hosts/new-machine/default.nix;
+        new-machine-minimal = mkNixosHost ./hosts/new-machine/minimal.nix;
+        new-machine-gaming = mkNixosHost ./hosts/new-machine/gaming.nix;
       };
 
       # 2. Standalone Configurations
