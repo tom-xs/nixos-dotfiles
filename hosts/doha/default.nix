@@ -15,7 +15,6 @@
     ../../home/tmux.nix
     ../../home/neovim.nix
     ];
-  _module.args.neovimNodeTooling = true;
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
   hardware.graphics.enable = true;
