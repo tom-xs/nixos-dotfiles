@@ -11,15 +11,19 @@
     ../../modules/maintenance.nix
     ../../modules/gaming.nix
     # ../../home/kitty.nix
-    ../../home/shell.nix
-    ../../home/tmux.nix
-    ../../home/neovim.nix
+    # ../../home/shell.nix
+    # ../../home/tmux.nix
+    # ../../home/neovim.nix
+    # ./home.nix
     ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
   hardware.graphics.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
 
+  # Adds "backup" and save current dotfiles, see:https://nix-community.github.io/home-manager/nixos-options.xhtml
+  home-manager.backupFileExtension = "backup";
+  
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = false;
