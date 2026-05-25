@@ -4,9 +4,9 @@
   imports = [
     # Hardware
     ./hardware-configuration.nix
+    ./nvidia.nix
 
     # System modules
-    ../../modules/nvidia.nix
     ../../modules/maintenance.nix
     ../../modules/gaming.nix
     ../../modules/common-hyper-desktop.nix

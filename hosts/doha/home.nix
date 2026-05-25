@@ -36,6 +36,9 @@
       zotero
       calibre
       gimp
+      thunderbird
+      gh
+      vscode
     ];
 
   # Git

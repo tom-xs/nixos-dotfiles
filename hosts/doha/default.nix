@@ -8,49 +8,25 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./nvidia.nix
+      
+      # System modules
       ../../modules/maintenance.nix
       ../../modules/gaming.nix
     ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
-  hardware.graphics.enable = true;
-  services.xserver.videoDrivers = [ "nvidia" ];
 
-  # Adds "backup" and save current dotfiles, see:https://nix-community.github.io/home-manager/nixos-options.xhtml
-  home-manager.backupFileExtension = "backup";
-  
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-    
-    # Since you have an RTX 5050 (Turing architecture or newer), 
-    # turning this on is highly recommended for better stability.
-    open = true;
-
-    nvidiaSettings = true;
-
-    prime = {
-      offload = {
-        enable = true;
-        enableOffloadCmd = true;
-      };
-
-      # Plugs in your specific Bus IDs here:
-      intelBusId = "PCI:0:2:0";
-      nvidiaBusId = "PCI:1:0:0";
-    };
-  };
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    grub.enable = true;
+    grub.device = "nodev";
+    grub.efiSupport = true;
+    systemd-boot.enable = false;
+    efi.canTouchEfiVariables = true;
+  };
 
   networking.hostName = "doha"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -116,11 +92,6 @@
     isNormalUser = true;
     description = "Tomas Xavier Santos";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      #  thunderbird
-      gh
-      vscode
-    ];
   };
 
   # Install firefox.
@@ -132,7 +103,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    vim 
     wget
     git
     gnome-tweaks
@@ -163,6 +134,8 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
+  
   system.stateVersion = "25.11"; # Did you read the comment?
 
+  home-manager.backupFileExtension = "backup";
 }
