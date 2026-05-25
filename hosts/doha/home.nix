@@ -11,7 +11,9 @@
 
   # Hyprland Configuration
   imports = [
-    # ./tmux.nix
+    ../../home/tmux.nix
+    ../../home/shell.nix
+    ../../home/kitty.nix
   ];
 
   # User Packages

@@ -63,7 +63,7 @@
                 inherit inputs;
                 themeVariant = "dark";
               };
-              # home-manager.users.tomasxs = import .hosts/doha/home.nix;
+              home-manager.users.tomasxs = import ./hosts/doha/home.nix;
             }
           ];
         };

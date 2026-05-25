@@ -13,6 +13,7 @@
       # System modules
       ../../modules/maintenance.nix
       ../../modules/gaming.nix
+      ../../modules/fonts.nix
     ];
   
   nix.settings.experimental-features = [ "nix-command" "flakes" ]; 

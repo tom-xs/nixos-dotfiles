@@ -10,6 +10,7 @@
     ../../modules/maintenance.nix
     ../../modules/gaming.nix
     ../../modules/common-hyper-desktop.nix
+    ../../modules/fonts.nix
 
     # Windows Manager
     ../../modules/hyprland.nix
