@@ -26,6 +26,7 @@
     with pkgs;
     [
       (stremioPkgs.stremio)
+      inputs.helium.packages.${system}.default
       btop
       tldr
       feh
