@@ -14,27 +14,28 @@
     ../../home/tmux.nix
     ../../home/shell.nix
     ../../home/kitty.nix
+    ../../home/neovim.nix
   ];
+  _module.args.neovimNodeTooling = true;
 
   # User Packages
   home.packages =
     let
+      system = pkgs.stdenv.hostPlatform.system;
       stremioPkgs = import inputs.nixpkgs-for-stremio {
-        inherit (pkgs) system;
+        inherit system;
       };
     in
     with pkgs;
     [
-      (stremioPkgs.stremio)
       inputs.helium.packages.${system}.default
-      btop
+      (stremioPkgs.stremio)
+      github-copilot-cli
       tldr
-      feh
       vesktop
       telegram-desktop
       zed-editor
-      httpie-desktop
-      httpie
+      libreoffice-still
       obsidian
       zotero
       calibre
@@ -42,6 +43,9 @@
       thunderbird
       gh
       vscode
+      xclip
+      spotify
+      irpf # :(
     ];
 
   # Git
@@ -52,8 +56,10 @@
       email = "tom.xaviersantos@gmail.com";
     };
   };
+  programs.fish.shellAliases = {
+    update = lib.mkForce "sudo nixos-rebuild switch --flake ~/nixos-dotfiles#doha";
+  };
 
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
   programs.home-manager.enable = true;
 }
-

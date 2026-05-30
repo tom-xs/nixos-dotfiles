@@ -5,18 +5,23 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-      
-      # System modules
-      ../../modules/maintenance.nix
-      ../../modules/gaming.nix
-      ../../modules/fonts.nix
-    ];
-  
-  nix.settings.experimental-features = [ "nix-command" "flakes" ]; 
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./nvidia.nix
+
+    # System modules
+    ../../modules/maintenance.nix
+    ../../modules/gaming.nix
+    ../../modules/fonts.nix
+    ../../modules/testing.nix
+    ../../modules/android.nix
+  ];
+
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   # Bootloader.
   boot.loader = {
@@ -25,6 +30,17 @@
     grub.efiSupport = true;
     systemd-boot.enable = false;
     efi.canTouchEfiVariables = true;
+  };
+  boot.resumeDevice = "/dev/disk/by-uuid/4968712c-2f9a-46ce-a018-0d6921f5f9a4";
+  boot.kernelParams = [
+    "mem_sleep_default=deep"
+    "nvidia.NVreg_PreserveVideoMemoryAllocations=1"
+    "nvidia.NVreg_TemporaryFilePath=/var/tmp"
+  ];
+
+  systemd.sleep.settings.Sleep = {
+    SuspendState = "mem";
+    SuspendMode = "deep";
   };
 
   networking.hostName = "doha"; # Define your hostname.
@@ -92,11 +108,12 @@
   users.users.tomasxs = {
     isNormalUser = true;
     description = "Tomas Xavier Santos";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+      "kvm"
+    ];
   };
-
-  # Install firefox.
-  programs.firefox.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -104,13 +121,16 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim 
+    vim
     wget
     git
     gnome-tweaks
-    git
-    gnome-tweaks
+    fish
+    gcc
+    gnumake
   ];
+  programs.fish.enable = true;
+  users.users.tomasxs.shell = pkgs.fish;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -137,7 +157,7 @@
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  
+
   system.stateVersion = "25.11"; # Did you read the comment?
 
   home-manager.backupFileExtension = "backup";

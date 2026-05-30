@@ -3,7 +3,7 @@
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
 
   targets.genericLinux.enable = true;
 

@@ -20,7 +20,7 @@ in
 
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
 
   home.sessionVariables = {
     ANDROID_HOME = "${config.home.homeDirectory}/Android/Sdk";

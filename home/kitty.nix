@@ -22,10 +22,11 @@ in
       enable_audio_bell = false;
       window_padding_width = 10;
       disable_ligatures = "always";
+      hide_window_decorations = "no";
     };
     font = {
       name = "JetBrains Mono NerdFont";
-      size = 12;
+      size = 16;
     };
   };
 }

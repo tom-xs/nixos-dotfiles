@@ -10,6 +10,15 @@
 
   programs.gamemode.enable = true;
 
+  environment.sessionVariables = {
+    MESA_SHADER_CACHE_DIR = "$HOME/.cache/mesa";
+    MESA_SHADER_CACHE_MAX_SIZE = "10G";
+    DXVK_STATE_CACHE = "1";
+    DXVK_STATE_CACHE_PATH = "$HOME/.cache/dxvk";
+    __GL_SHADER_DISK_CACHE = "1";
+    __GL_SHADER_DISK_CACHE_PATH = "$HOME/.cache/nv-shaders";
+  };
+
   environment.systemPackages = with pkgs; [
     # lutris
     prismlauncher

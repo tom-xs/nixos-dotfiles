@@ -11,19 +11,20 @@
 
   # Hyprland Configuration
   imports = [
-    ./hyprland.nix
-    ./waybar.nix
-    ./neovim.nix
-    ./shell.nix
-    ./kitty.nix
-    ./tmux.nix
+    ../../home/hyprland.nix
+    ../../home/waybar.nix
+    ../../home/neovim.nix
+    ../../home/shell.nix
+    ../../home/kitty.nix
+    ../../home/tmux.nix
   ];
 
   # User Packages
   home.packages =
     let
+      system = pkgs.stdenv.hostPlatform.system;
       stremioPkgs = import inputs.nixpkgs-for-stremio {
-        inherit (pkgs) system;
+        inherit system;
       };
     in
     with pkgs;
@@ -64,6 +65,6 @@
     };
   };
 
-  home.stateVersion = "26.05";
+  home.stateVersion = "26.11";
   programs.home-manager.enable = true;
 }

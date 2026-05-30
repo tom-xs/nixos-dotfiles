@@ -25,6 +25,7 @@
       python313Packages.python-lsp-server
       elixir-ls
       gopls
+      clang-tools
       nixfmt
       stylua
       prettierd
@@ -180,6 +181,8 @@
               python = { "black" },
               elixir = { "mix" },
               go = { "gofumpt", "goimports" },
+              c = { "clang-format" },
+              cpp = { "clang-format" },
           },
           format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -314,7 +317,7 @@
 
       -- LSP & CMP
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls", "clangd" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then
