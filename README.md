@@ -8,39 +8,42 @@ This repository manages system and user configurations across multiple machines 
 
 ## Machines
 
-- **camaragibe**: Full NixOS desktop system with Hyprland wayland compositor, NVIDIA GPU support, gaming tools, and desktop applications
-- **moreno**: Home Manager configuration for non-NixOS Linux systems, focused on development tools
-- **recife**: Standalone Home Manager configuration for a secondary Linux machine
-- **wsl**: Windows Subsystem for Linux configuration with minimal development tools
+- **camaragibe**: Full NixOS desktop (Hyprland, NVIDIA, desktop apps)
+- **doha**: Full NixOS desktop (GNOME, NVIDIA, testing tools, Android Studio)
+- **moreno**: Home Manager only, non-NixOS Linux, development tools
+- **recife**: Standalone Home Manager, secondary Linux (Android dev, Elixir/Go)
+- **wsl**: WSL Home Manager (Node.js, Go, Appium)
 
 ## Structure
 
 ```
 .
-├── flake.nix              # Flake configuration and inputs
-├── flake.lock             # Locked versions of all dependencies
+├── flake.nix              # Flake entry point
 ├── hosts/                 # Machine-specific configurations
-│   ├── camaragibe/        # Full NixOS system configuration
+│   ├── camaragibe/        # Full NixOS (Hyprland + NVIDIA + gaming)
+│   ├── doha/              # Full NixOS (GNOME + NVIDIA + testing)
 │   ├── moreno/            # Home Manager only
-│   ├── recife/            # Home Manager only
-│   └── wsl/               # WSL Home Manager configuration
-├── home/                  # User-level configurations (imported by hosts)
-│   ├── home.nix           # Main home configuration (camaragibe)
-│   ├── hyprland.nix       # Hyprland compositor settings
-│   ├── waybar.nix         # System bar configuration
-│   ├── neovim.nix         # Neovim editor configuration
-│   ├── shell.nix          # Shell configuration
-│   ├── kitty.nix          # Kitty terminal configuration
-│   ├── tmux.nix           # Tmux multiplexer configuration
-│   ├── konsole.nix        # KDE Konsole configuration
-│   └── emacs.nix          # Emacs configuration
-└── modules/               # System-level modules (camaragibe only)
-    ├── common-desktop.nix # Base desktop packages and audio setup
-    ├── hyprland.nix       # Hyprland system packages
+│   ├── recife/            # Home Manager only (Android dev)
+│   └── wsl/               # WSL Home Manager
+├── home/                  # Shared Home Manager modules (imported by hosts)
+│   ├── neovim.nix         # Neovim with LSP, Treesitter, conform
+│   ├── shell.nix          # fish, starship, eza, zoxide, bat, fzf
+│   ├── tmux.nix           # Tmux with Everforest theme
+│   ├── kitty.nix          # Kitty terminal (nixGL on non-NixOS)
+│   ├── konsole.nix        # KDE Konsole with Everforest themes
+│   ├── hyprland.nix       # Hyprland user config
+│   ├── waybar.nix         # Waybar status bar
+│   └── emacs.nix          # Doom Emacs
+└── modules/               # NixOS system modules (NixOS hosts only)
+    ├── common-hyper-desktop.nix
+    ├── hyprland.nix
     ├── hyprland-minimal.nix
-    ├── nvidia.nix         # NVIDIA GPU drivers and configuration
-    ├── gaming.nix         # Gaming tools and launchers
-    └── maintenance.nix    # System maintenance tools
+    ├── nvidia.nix
+    ├── gaming.nix
+    ├── android.nix
+    ├── fonts.nix
+    ├── testing.nix
+    └── maintenance.nix
 ```
 
 ## Key Technologies
@@ -81,38 +84,19 @@ This repository manages system and user configurations across multiple machines 
 
 ## Usage
 
-### Camaragibe (Full NixOS)
+### NixOS hosts (camaragibe, doha)
 
-Rebuild the system:
 ```bash
-sudo nixos-rebuild switch --flake ~/nixos-dotfiles#camaragibe
+sudo nixos-rebuild switch --flake ~/nixos-dotfiles#<host>
 ```
 
-### Moreno (Home Manager only)
+### Home Manager only (moreno, recife, wsl)
 
-Switch to configuration:
 ```bash
-home-manager switch --flake ~/nixos-dotfiles#tomasxs@moreno
+home-manager switch --flake ~/nixos-dotfiles#tomasxs@<host>
 ```
 
-Update and switch:
-```bash
-update
-```
-
-### Recife (Home Manager only)
-
-Switch to configuration:
-```bash
-home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure
-```
-
-### WSL (Home Manager only)
-
-Switch to configuration:
-```bash
-home-manager switch --flake ~/nixos-dotfiles#tomasxs@wsl
-```
+Note: currently recife and wsl need `--impure` (local `fetchGit` source) to load appium package.
 
 ## Hardware
 

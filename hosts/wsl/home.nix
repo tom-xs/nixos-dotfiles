@@ -5,6 +5,16 @@
   ...
 }:
 
+let
+  nixpkgs-local = fetchGit {
+    url = "/home/tomasxs/Projects/nixpkgs/";
+    ref = "pkgs/appiumv2";
+  };
+  pkgs-local = import nixpkgs-local {
+    system = builtins.currentSystem;
+    config.allowUnfree = true;
+  };
+in
 {
   # Change this if your WSL username is different
   home.username = "tomasxs";
@@ -21,7 +31,6 @@
     ../../home/shell.nix
     ../../home/tmux.nix
   ];
-  _module.args.neovimNodeTooling = true;
 
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
@@ -34,6 +43,14 @@
     wget
     curl
 
+    beam.packages.erlang.elixir
+    inotify-tools
+
+    pkgs-local.appium
+    nodejs_22
+    yarn
+
+    opencode
     go
     gh
   ];
@@ -57,6 +74,6 @@
 
   # 6. Update Alias
   programs.bash.shellAliases = {
-    update = lib.mkForce "home-manager switch --flake ~/nixos-dotfiles#tomasxs@wsl";
+    update = lib.mkForce "home-manager switch --flake ~/nixos-dotfiles#tomasxs@wsl --impure";
   };
 }

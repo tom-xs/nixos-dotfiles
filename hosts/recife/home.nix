@@ -16,8 +16,6 @@ let
   };
 in
 {
-  _module.args.neovimNodeTooling = true;
-
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
   home.stateVersion = "26.11";

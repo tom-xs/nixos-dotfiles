@@ -16,8 +16,6 @@
     ../../home/kitty.nix
     ../../home/neovim.nix
   ];
-  _module.args.neovimNodeTooling = true;
-
   # User Packages
   home.packages =
     let
