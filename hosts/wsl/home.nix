@@ -28,6 +28,7 @@ in
   # 2. Import your shared modules
   imports = [
     ../../home/neovim.nix
+    ../../home/emacs.nix
     ../../home/shell.nix
     ../../home/tmux.nix
   ];
@@ -51,6 +52,9 @@ in
     yarn
 
     opencode
+    gleam
+    erlang
+    rebar3
     go
     gh
   ];

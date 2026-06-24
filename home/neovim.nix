@@ -37,6 +37,9 @@
       delve
       gofumpt
       gotools
+      sqls
+      dockerfile-language-server-nodejs
+      hadolint
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -183,6 +186,7 @@
               go = { "gofumpt", "goimports" },
               c = { "clang-format" },
               cpp = { "clang-format" },
+              dockerfile = { "hadolint" },
           },
           format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -317,7 +321,7 @@
 
       -- LSP & CMP
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls", "clangd" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls", "clangd", "sqls", "gleam", "docker_compose_language_service", "dockerfilels" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then

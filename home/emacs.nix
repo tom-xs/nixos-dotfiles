@@ -3,7 +3,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.emacs;
+    package = pkgs.doom-emacs;
   };
 
   home.packages = with pkgs; [
@@ -13,6 +13,7 @@
     findutils
     clang
     shellcheck
+    emacs-all-the-icons-fonts
   ];
 
   home.sessionPath = [ "$HOME/.config/emacs/bin" ];
