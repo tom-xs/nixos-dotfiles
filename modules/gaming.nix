@@ -20,7 +20,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    # lutris
+    lutris
     prismlauncher
     mangohud
   ];

@@ -6,14 +6,17 @@
 }:
 
 let
-  nixpkgs-local = fetchGit {
-    url = "/home/tomasxs/Projects/nixpkgs/";
-    ref = "appium-update";
-  };
-  pkgs-local = import nixpkgs-local {
-    system = builtins.currentSystem;
-    config.allowUnfree = true;
-  };
+
+  #nixpkgs-local = fetchGit {
+  #  url = "/home/tomasxs/Projects/nixpkgs/";
+  #  ref = "appium-update";
+  #};
+  pkgs-local =
+    # nixpkgs-local \
+    import {
+      system = builtins.currentSystem;
+      config.allowUnfree = true;
+    };
 in
 {
   home.username = "tomasxs";
@@ -34,30 +37,46 @@ in
   ];
 
   home.packages = with pkgs; [
-    nordic
-    utterly-nord-plasma
+    # Fun
+    telegram-desktop
+    vesktop
+    steam
 
+    # Programming
     beam.packages.erlang.elixir
     inotify-tools
-
     go
     nil
     nixd
-    github-copilot-cli
+    opencode
     chromium
-    telegram-desktop
-    pkgs-local.appium
+    bootdev-cli
+    gh
+
+    # Fonts
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.fira-code
+    nerd-fonts.hack
+    nerd-fonts.symbols-only
+
+    #pkgs-local.appium
   ];
 
   targets.genericLinux.enable = true;
 
   imports = [
+    ../../home/hyprland-minimal.nix
+    ../../home/hyprland.nix
     ../../home/neovim.nix
     ../../home/shell.nix
     ../../home/tmux.nix
     ../../home/kitty.nix
-    ../../home/emacs.nix
   ];
+
+  xdg.portal = {
+    enable = true;
+    config.common.default = "*";
+  };
 
   programs.git = {
     enable = true;
@@ -70,24 +89,10 @@ in
   programs.home-manager.enable = true;
 
   programs.fish.shellAliases = {
-    # Needed while pkgs-local.appium comes from a local fetchGit source.
     update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
   };
   programs.bash.shellAliases = {
     update = lib.mkForce "home-manager switch -b backup --flake ~/nixos-dotfiles#tomasxs@recife --impure";
   };
 
-  programs.zed-editor = {
-    enable = true;
-    extensions = [ "nix" ];
-    userSettings = {
-      lsp = {
-        nix = {
-          binary = {
-            path_lookup = true;
-          };
-        };
-      };
-    };
-  };
 }

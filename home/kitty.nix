@@ -26,7 +26,7 @@ in
     };
     font = {
       name = "JetBrains Mono NerdFont";
-      size = 16;
+      size = 14;
     };
   };
 }

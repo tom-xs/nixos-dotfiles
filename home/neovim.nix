@@ -38,7 +38,7 @@
       gofumpt
       gotools
       sqls
-      dockerfile-language-server-nodejs
+      dockerfile-language-server
       hadolint
     ];
 

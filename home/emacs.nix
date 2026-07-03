@@ -3,7 +3,7 @@
 {
   programs.emacs = {
     enable = true;
-    package = pkgs.doom-emacs;
+    #package = pkgs.doom-emacs;
   };
 
   home.packages = with pkgs; [
