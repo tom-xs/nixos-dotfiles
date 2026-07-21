@@ -22,7 +22,6 @@
       nil
       nixd
       rust-analyzer
-      python313Packages.python-lsp-server
       elixir-ls
       gopls
       clang-tools
@@ -40,6 +39,8 @@
       sqls
       dockerfile-language-server
       hadolint
+      pyright
+      ruff
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -181,7 +182,7 @@
               json = { "prettierd" },
               sh = { "shfmt" },
               rust = { "rustfmt" },
-              python = { "black" },
+              python = { "black", "ruff" },
               elixir = { "mix" },
               go = { "gofumpt", "goimports" },
               c = { "clang-format" },
@@ -321,7 +322,7 @@
 
       -- LSP & CMP
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pylsp", "elixirls", "gopls", "clangd", "sqls", "gleam", "docker_compose_language_service", "dockerfilels" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pyright", "elixirls", "gopls", "clangd", "sqls", "gleam", "docker_compose_language_service", "dockerfilels" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then
@@ -330,6 +331,27 @@
           else
               require('lspconfig')[lsp].setup({ capabilities = capabilities })
           end
+      end
+
+      local pyright_opts = {
+          capabilities = capabilities,
+          settings = {
+              python = {
+                  analysis = {
+                      typeCheckingMode = "basic",
+                      autoSearchPaths = true,
+                      useLibraryCodeForTypes = true,
+                      diagnosticMode = "workspace",
+                  }
+              }
+          }
+      }
+
+      if vim.lsp.config then
+          vim.lsp.config("pyright", pyright_opts)
+          vim.lsp.enable("pyright")
+      else
+          require('lspconfig').pyright.setup(pyright_opts)
       end
 
       local cmp = require('cmp')

@@ -111,19 +111,20 @@
             hl.exec_cmd("swaybg -i /home/tomasxs/.local/share/wallpaper/dark1.jpg -m fill")
             hl.exec_cmd("waybar")
             hl.exec_cmd("mako")
+            hl.exec_cmd("hypridle") -- Starts the background tracker for sleep/lock
 
             -- 2. Applications (launched silently on their assigned workspaces)
             hl.exec_cmd("[workspace 1 silent] helium-browser")
 
             hl.exec_cmd("[workspace 2 silent] kitty")
-            hl.exec_cmd("[workspace 2 silent] kitty")
 
             hl.exec_cmd("[workspace 3 silent] Telegram")
+            -- TODO: fix vesktop loading on wrong monitor
             hl.exec_cmd("[workspace 3 silent] vesktop")
 
             hl.exec_cmd("[workspace 4 silent] spotify")
 
-            hl.exec_cmd("[workspace special:magic silent] zeditor")
+            -- hl.exec_cmd("[workspace special:magic silent] zeditor")
 
         end)
 
@@ -183,7 +184,10 @@
         hl.bind(mod .. " + W", hl.dsp.window.close())
         hl.bind(mod .. " + J", hl.dsp.layout("togglesplit"))
         hl.bind(mod .. " + E", hl.dsp.exec_cmd(fileManager))
-        hl.bind(mod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+        hl.bind(mod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
+        -- Instantly put the computer to sleep (it will automatically lock first thanks to hypridle)
+        hl.bind(mod .. " + SHIFT + L", hl.dsp.exec_cmd("systemctl suspend"))
+        -- hl.bind(mod .. " + L", hl.dsp.exec_cmd("hyprlock"))
         hl.bind(mod .. " + D", hl.dsp.exec_cmd(menu))
         hl.bind(mod .. " + P", hl.dsp.window.pseudo())
         hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
@@ -235,6 +239,82 @@
             hl.bind("XF86AudioPlay",  hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
             hl.bind("XF86AudioPrev",  hl.dsp.exec_cmd("playerctl previous"),   { locked = true })
     '';
+  };
+  services.hypridle = {
+    enable = true;
+    package = null;
+
+    settings = {
+      general = {
+        lock_cmd = "pidof hyprlock || hyprlock";
+        before_sleep_cmd = "loginctl lock-session";
+        after_sleep_cmd = "hyprctl dispatch dpms on";
+      };
+
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = "loginctl lock-session";
+        }
+        {
+          timeout = 330;
+          on-timeout = "hyprctl dispatch dpms off";
+          on-resume = "hyprctl dispatch dpms on";
+        }
+        {
+          timeout = 1800;
+          on-timeout = "systemctl suspend";
+        }
+      ];
+    };
+  };
+
+  programs.hyprlock = {
+    enable = true;
+    package = null;
+
+    settings = {
+      general = {
+        disable_loading_bar = true;
+        hide_cursor = true;
+      };
+
+      background = [
+        {
+          path = "/home/tomasxs/.local/share/wallpaper/dark1.jpg";
+          blur_passes = 3;
+          blur_size = 8;
+        }
+      ];
+
+      input-field = [
+        {
+          size = "250, 50";
+          position = "0, -80";
+          monitor = "";
+          dots_center = true;
+          fade_on_empty = false;
+          font_color = "rgb(255, 255, 255)";
+          inner_color = "rgb(0, 0, 0)";
+          outer_color = "rgb(51, 51, 51)";
+          outline_thickness = 2;
+          placeholder_text = "<i>Password...</i>";
+          shadow_passes = 2;
+        }
+      ];
+
+      label = [
+        {
+          text = "$TIME";
+          font_size = 64;
+          font_family = "JetBrainsMono Nerd Font Bold";
+          position = "0, 80";
+          valign = "center";
+          halign = "center";
+          color = "rgb(255, 255, 255)";
+        }
+      ];
+    };
   };
 
   home.sessionVariables = {

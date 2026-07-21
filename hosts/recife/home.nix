@@ -36,11 +36,16 @@ in
     "${config.home.homeDirectory}/Android/Sdk/cmdline-tools/latest/bin"
   ];
 
+  # Enable the Keyring Daemon
+  services.gnome-keyring.enable = true;
+
   home.packages = with pkgs; [
     # Fun
     telegram-desktop
     vesktop
-    steam
+
+    # Utils
+    seahorse
 
     # Programming
     beam.packages.erlang.elixir

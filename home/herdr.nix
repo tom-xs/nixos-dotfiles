@@ -14,6 +14,14 @@ let
         yellow = "#dbbc7f";
         text = "#d3c6aa";
         surface0 = "#272e33";
+        subtext0 = "#a6acae";
+        surface1 = "#343f44";
+        surface_dim = "#232a2e";
+        overlay0 = "#56635f";
+        overlay1 = "#6d7f8b";
+        mauve = "#d699b6";
+        teal = "#7fbbb3";
+        peach = "#ed9366";
       }
     else
       {
@@ -26,6 +34,14 @@ let
         yellow = "#dbbc7f";
         text = "#5c6a72";
         surface0 = "#fffbef";
+        subtext0 = "#708089";
+        surface1 = "#e3e0d1";
+        surface_dim = "#e8e4d9";
+        overlay0 = "#9aa9a0";
+        overlay1 = "#8c9fa0";
+        mauve = "#b57edb";
+        teal = "#3da5a0";
+        peach = "#e67e80";
       };
 
   # Generate TOML config
@@ -90,12 +106,28 @@ let
     yellow = "${colors.yellow}"
     text = "${colors.text}"
     surface0 = "${colors.surface0}"
+    subtext0 = "${colors.subtext0}"
+    surface1 = "${colors.surface1}"
+    surface_dim = "${colors.surface_dim}"
+    overlay0 = "${colors.overlay0}"
+    overlay1 = "${colors.overlay1}"
+    mauve = "${colors.mauve}"
+    teal = "${colors.teal}"
+    peach = "${colors.peach}"
 
     [ui]
     pane_borders = true
     pane_gaps = true
     copy_on_select = true
     confirm_close = true
+    sidebar_width = 30
+    sidebar_max_width = 42
+
+    [ui.sidebar.agents]
+    rows = [["state_icon", "workspace", "tab"]]
+
+    [ui.sidebar.spaces]
+    rows = [["state_icon", "workspace", "branch"]]
 
     [ui.toast]
     delivery = "herdr"
