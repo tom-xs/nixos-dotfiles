@@ -56,11 +56,11 @@ let
     # Match tmux prefix (C-a)
     prefix = "ctrl+a"
 
-    # Pane navigation (matching tmux习惯)
-    focus_pane_left = "prefix+h"
-    focus_pane_down = "prefix+j"
-    focus_pane_up = "prefix+k"
-    focus_pane_right = "prefix+l"
+    # Pane navigation (matching tmux: prefix+hjkl + alt+hjkl + alt+arrows)
+    focus_pane_left = ["prefix+h", "alt+h", "alt+left"]
+    focus_pane_down = ["prefix+j", "alt+j", "alt+down"]
+    focus_pane_up = ["prefix+k", "alt+k", "alt+up"]
+    focus_pane_right = ["prefix+l", "alt+l", "alt+right"]
 
     # Tab navigation
     new_tab = "prefix+c"
@@ -74,8 +74,15 @@ let
     close_workspace = "prefix+shift+d"
     rename_workspace = "prefix+shift+w"
     workspace_picker = "prefix+w"
+    previous_workspace = "prefix+shift+tab"
+    next_workspace = "prefix+tab"
 
-    # Split panes (matching tmux习惯)
+    # Agent navigation
+    previous_agent = "prefix+shift+p"
+    next_agent = "prefix+shift+o"
+    focus_agent = "prefix+alt+1..9"
+
+    # Split panes (matching tmux: prefix+v/-)
     split_vertical = "prefix+v"
     split_horizontal = "prefix+minus"
 
