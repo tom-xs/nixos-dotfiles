@@ -148,6 +148,9 @@ let
 
     [remote]
     manage_ssh_config = true
+
+    [experimental]
+    pane_history = true
   '';
 in
 {
