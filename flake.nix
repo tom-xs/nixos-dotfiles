@@ -13,6 +13,10 @@
       url = "github:AlvaroParker/helium-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    herdr = {
+      url = "github:ogulcancelik/herdr";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,6 +26,7 @@
       home-manager,
       nixgl,
       helium,
+      herdr,
       ...
     }@inputs:
     let
@@ -47,6 +52,7 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 themeVariant = "dark";
+                herdr = herdr.packages.${system}.default;
               };
               home-manager.users.tomasxs = import ./hosts/camaragibe/home.nix;
             }
@@ -64,6 +70,7 @@
               home-manager.extraSpecialArgs = {
                 inherit inputs;
                 themeVariant = "dark";
+                herdr = herdr.packages.${system}.default;
               };
               home-manager.users.tomasxs = import ./hosts/doha/home.nix;
             }
@@ -78,6 +85,7 @@
           extraSpecialArgs = {
             inherit inputs;
             themeVariant = "dark";
+            herdr = herdr.packages.${system}.default;
           };
           modules = [
             ./hosts/moreno/home.nix
@@ -88,6 +96,7 @@
           extraSpecialArgs = {
             inherit inputs;
             themeVariant = "dark";
+            herdr = herdr.packages.${system}.default;
           };
           modules = [ ./hosts/recife/home.nix ];
         };
@@ -96,6 +105,7 @@
           extraSpecialArgs = {
             inherit inputs;
             themeVariant = "dark"; # Defaults to dark theme
+            herdr = herdr.packages.${system}.default;
           };
           modules = [ ./hosts/wsl/home.nix ];
         };

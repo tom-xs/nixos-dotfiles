@@ -31,6 +31,7 @@ in
     ../../home/emacs.nix
     ../../home/shell.nix
     ../../home/tmux.nix
+    ../../home/herdr.nix
   ];
 
   home.sessionPath = [

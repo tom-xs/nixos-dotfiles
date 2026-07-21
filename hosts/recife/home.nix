@@ -70,6 +70,7 @@ in
     ../../home/neovim.nix
     ../../home/shell.nix
     ../../home/tmux.nix
+    ../../home/herdr.nix
     ../../home/kitty.nix
   ];
 
