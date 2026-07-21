@@ -46,10 +46,8 @@ in
     # 3. Extra Config
     extraConfig = ''
       # --- Split bindings ---
-      bind | split-window -h -c "#{pane_current_path}"
+      bind v split-window -h -c "#{pane_current_path}"
       bind - split-window -v -c "#{pane_current_path}"
-      unbind '"'
-      unbind %
 
       # Reload config
       bind r source-file ~/.config/tmux/tmux.conf \; display "Reloaded!"

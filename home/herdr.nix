@@ -60,7 +60,7 @@ let
     workspace_picker = "prefix+w"
 
     # Split panes (matching tmux习惯)
-    split_vertical = "prefix+pipe"
+    split_vertical = "prefix+v"
     split_horizontal = "prefix+minus"
 
     # Pane management
