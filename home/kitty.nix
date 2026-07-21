@@ -20,11 +20,11 @@ in
     settings = {
       confirm_os_window_close = 0;
       enable_audio_bell = false;
-      window_padding_width = 2;
+      window_padding_width = 0;
       # disable_ligatures = "always";
       hide_window_decorations = "no";
     };
-    #TODO: fix font problem ?
+
     font = {
       name = "JetBrainsMono Nerd Font";
       size = 14;

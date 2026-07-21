@@ -1,4 +1,9 @@
-{ pkgs, themeVariant, herdr, ... }:
+{
+  pkgs,
+  themeVariant,
+  herdr,
+  ...
+}:
 
 let
   # Define Color Palettes (Everforest)
@@ -56,7 +61,7 @@ let
     # Match tmux prefix (C-a)
     prefix = "ctrl+a"
 
-    # Pane navigation (matching tmux: prefix+hjkl + alt+hjkl + alt+arrows)
+    # Pane navigation
     focus_pane_left = ["prefix+h", "alt+h", "alt+left"]
     focus_pane_down = ["prefix+j", "alt+j", "alt+down"]
     focus_pane_up = ["prefix+k", "alt+k", "alt+up"]
@@ -82,7 +87,7 @@ let
     next_agent = "prefix+shift+o"
     focus_agent = "prefix+alt+1..9"
 
-    # Split panes (matching tmux: prefix+v/-)
+    # Split panes 
     split_vertical = "prefix+v"
     split_horizontal = "prefix+minus"
 
@@ -127,7 +132,7 @@ let
     pane_gaps = true
     copy_on_select = true
     confirm_close = true
-    sidebar_width = 30
+    sidebar_width = 35
     sidebar_max_width = 42
 
     [ui.sidebar.agents]
