@@ -349,10 +349,28 @@
     style.package = pkgs.adwaita-qt;
   };
 
+  services.mako = {
+    enable = true;
+    settings = {
+      width = 250;
+      height = 50;
+      font = "monospace 10";
+      border-radius = 0;
+      border-size = 1;
+      padding = 5;
+      margin = "5,5,0,0";
+      default-timeout = 3000;
+      background-color = "#000000";
+      text-color = "#ffffff";
+      border-color = "#333333";
+      progress-color = "#ffffff";
+      layer = "overlay";
+    };
+  };
+
   home.packages = with pkgs; [
     gnome-themes-extra
     adwaita-qt
-    mako
     swaybg
     adwaita-icon-theme
 
