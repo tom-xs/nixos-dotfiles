@@ -183,15 +183,18 @@
 
     settings = {
       general = {
-        lock_cmd = "pidof hyprlock || hyprlock";
+        lock_cmd = "hyprlock";
         before_sleep_cmd = "loginctl lock-session";
-        after_sleep_cmd = "hyprctl dispatch dpms on";
+        # Turn displays back on after sleep and ensure hyprlock is still active
+        # (restart it if it crashed while the screen was off).
+        after_sleep_cmd = "hyprctl dispatch dpms on; pidof hyprlock || loginctl lock-session";
+        ignore_dbus_inhibit = false;
       };
 
       listener = [
         {
           timeout = 300;
-          on-timeout = "loginctl lock-session";
+          on-timeout = "pidof hyprlock || hyprlock";
         }
         {
           timeout = 330;
