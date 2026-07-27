@@ -1,30 +1,7 @@
 { pkgs, themeVariant, ... }:
 
 let
-  # Define Color Palettes
-  colors =
-    if themeVariant == "dark" then
-      {
-        # Dark Hard
-        status_bg = "#2d353b";
-        status_fg = "#d3c6aa";
-        window_bg = "#272e33"; # Hard background
-        active_bg = "#a7c080";
-        active_fg = "#272e33";
-        border_inactive = "#475258";
-        border_active = "#a7c080";
-      }
-    else
-      {
-        # Light Hard (Based on your previous config)
-        status_bg = "#efebd4";
-        status_fg = "#5c6a72";
-        window_bg = "#fffbef"; # Hard light background
-        active_bg = "#a7c080";
-        active_fg = "#2d353b";
-        border_inactive = "#d3c6aa";
-        border_active = "#a7c080";
-      };
+  colors = import ../lib/everforest.nix { inherit themeVariant; };
 in
 {
   programs.tmux = {

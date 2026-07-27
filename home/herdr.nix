@@ -6,48 +6,7 @@
 }:
 
 let
-  # Define Color Palettes (Everforest)
-  colors =
-    if themeVariant == "dark" then
-      {
-        # Dark Hard
-        panel_bg = "#2d353b";
-        accent = "#a7c080";
-        green = "#a7c080";
-        blue = "#7fbbb3";
-        red = "#e67e80";
-        yellow = "#dbbc7f";
-        text = "#d3c6aa";
-        surface0 = "#272e33";
-        subtext0 = "#a6acae";
-        surface1 = "#343f44";
-        surface_dim = "#232a2e";
-        overlay0 = "#56635f";
-        overlay1 = "#6d7f8b";
-        mauve = "#d699b6";
-        teal = "#7fbbb3";
-        peach = "#ed9366";
-      }
-    else
-      {
-        # Light Hard
-        panel_bg = "#efebd4";
-        accent = "#a7c080";
-        green = "#a7c080";
-        blue = "#7fbbb3";
-        red = "#e67e80";
-        yellow = "#dbbc7f";
-        text = "#5c6a72";
-        surface0 = "#fffbef";
-        subtext0 = "#708089";
-        surface1 = "#e3e0d1";
-        surface_dim = "#e8e4d9";
-        overlay0 = "#9aa9a0";
-        overlay1 = "#8c9fa0";
-        mauve = "#b57edb";
-        teal = "#3da5a0";
-        peach = "#e67e80";
-      };
+  colors = import ../lib/everforest.nix { inherit themeVariant; };
 
   # Generate TOML config
   configToml = ''

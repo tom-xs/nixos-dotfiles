@@ -32,18 +32,20 @@ This repository manages system and user configurations across multiple machines 
 │   ├── kitty.nix          # Kitty terminal (nixGL on non-NixOS)
 │   ├── konsole.nix        # KDE Konsole with Everforest themes
 │   ├── hyprland.nix       # Hyprland user config
+│   ├── hyprland-minimal.nix # Hyprland minimal desktop config
 │   ├── waybar.nix         # Waybar status bar
-│   └── emacs.nix          # Doom Emacs
-└── modules/               # NixOS system modules (NixOS hosts only)
-    ├── common-hyper-desktop.nix
-    ├── hyprland.nix
-    ├── hyprland-minimal.nix
-    ├── nvidia.nix
-    ├── gaming.nix
-    ├── android.nix
-    ├── fonts.nix
-    ├── testing.nix
-    └── maintenance.nix
+│   ├── herdr.nix          # Herdr terminal multiplexer
+│   ├── emacs.nix          # Doom Emacs
+│   └── kimi-code.nix      # Kimi Code CLI + agent skills
+├── modules/               # NixOS system modules (NixOS hosts only)
+│   ├── common-hyper-desktop.nix
+│   ├── hyprland.nix
+│   ├── gaming.nix
+│   ├── android.nix
+│   ├── fonts.nix
+│   ├── testing.nix
+│   └── maintenance.nix
+└── ai/kimi-skills/        # Kimi Code CLI agent skills
 ```
 
 ## Key Technologies

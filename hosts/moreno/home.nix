@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, kimi-code, ... }:
 
 {
   home.username = "tomasxs";
@@ -13,6 +13,7 @@
     ../../home/tmux.nix
     ../../home/konsole.nix
     ../../home/emacs.nix
+    ../../home/kimi-code.nix
   ];
 
   programs.git = {

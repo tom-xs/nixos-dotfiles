@@ -12,9 +12,8 @@
     ../../modules/common-hyper-desktop.nix
     ../../modules/fonts.nix
 
-    # Windows Manager
+    # Window Manager
     ../../modules/hyprland.nix
-    ../../modules/hyprland-minimal.nix
   ];
 
   # Bootloader

@@ -12,6 +12,7 @@
   # Hyprland Configuration
   imports = [
     ../../home/hyprland.nix
+    ../../home/hyprland-minimal.nix
     ../../home/waybar.nix
     ../../home/neovim.nix
     ../../home/shell.nix

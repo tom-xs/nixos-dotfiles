@@ -91,6 +91,7 @@
             inherit inputs;
             themeVariant = "dark";
             herdr = herdr.packages.${system}.default;
+            kimi-code = kimi-code.packages.${system}.default;
           };
           modules = [
             ./hosts/moreno/home.nix

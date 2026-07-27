@@ -6,12 +6,14 @@
 }:
 
 let
+  # Local nixpkgs fork containing the appium package.
+  # This requires --impure because fetchGit on a local path is not pure.
   nixpkgs-local = fetchGit {
     url = "/home/tomasxs/Projects/nixpkgs/";
     ref = "pkgs/appiumv2";
   };
   pkgs-local = import nixpkgs-local {
-    system = builtins.currentSystem;
+    system = pkgs.stdenv.hostPlatform.system;
     config.allowUnfree = true;
   };
 in

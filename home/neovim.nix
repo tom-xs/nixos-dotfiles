@@ -50,8 +50,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "nvim-lualine";
           repo = "lualine.nvim";
-          rev = "master";
-          hash = "sha256-OpLZH+sL5cj2rcP5/T+jDOnuxd1QWLHCt2RzloffZOA=";
+          rev = "221ce6b2d999187044529f49da6554a92f740a96";
+          hash = "sha256-100jgcrv4k1rivszx2xd51qb2hxra20rhdvlzkg8yxq4gnxwdy78";
         };
       })
       indent-blankline-nvim
@@ -61,8 +61,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "ahmedkhalf";
           repo = "project.nvim";
-          rev = "main";
-          hash = "sha256-avV3wMiDbraxW4mqlEsKy0oeewaRj9Q33K8NzWoaptU=";
+          rev = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb";
+          hash = "sha256-1md639mcs3dgvhvx93wi0rxiwjnb195r9al9bfqvcvl3r307gxba";
         };
       })
       trouble-nvim

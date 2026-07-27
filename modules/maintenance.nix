@@ -1,19 +1,17 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
-
 {
-  # 1. Bootloader Cleanup (Requested)
-  # Limit valid boot entries to 10 to keep the menu clean
-  boot.loader.systemd-boot.configurationLimit = 5;
+  # Bootloader cleanup: keep at most 5 generations
+  boot.loader.systemd-boot.configurationLimit = lib.mkIf config.boot.loader.systemd-boot.enable 5;
+  boot.loader.grub.configurationLimit = lib.mkIf config.boot.loader.grub.enable 5;
 
-  # 2. Storage Optimization
+  # Storage Optimization
   nix.settings.auto-optimise-store = true;
 
-  # 3. Automatic Garbage Collection
+  # Automatic Garbage Collection
   nix.gc = {
     automatic = true;
     dates = "weekly";
