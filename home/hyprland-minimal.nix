@@ -1,70 +1,7 @@
 { pkgs, ... }:
 
 {
-  programs.waybar = {
-    enable = true;
-
-    settings = {
-      mainBar = {
-        layer = "top";
-        position = "top";
-        height = 26;
-        modules-left = [ "hyprland/workspaces" ];
-        modules-center = [ "clock" ];
-        modules-right = [
-          "battery"
-          "pulseaudio"
-          "tray"
-        ];
-
-        "hyprland/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
-          format = "{name}";
-
-          show-special = true;
-          special-visible-only = true;
-        };
-        clock = {
-          format = "{:%H:%M - %d/%m/%Y}";
-        };
-        battery = {
-          format = "{capacity}%";
-        };
-        pulseaudio = {
-          format = "VOL {volume}%";
-        };
-      };
-    };
-
-    style = ''
-            * {
-      border: none;
-              border-radius: 0;
-              font-family: monospace;
-              font-size: 13px;
-              min-height: 0;
-            }
-          window#waybar {
-      background: #000000;
-      color: #ffffff;
-             border-bottom: 1px solid #333333; /* Thin outline */
-          }
-      #workspaces button {
-      padding: 0 5px;
-      background: transparent;
-      color: #888888;
-      }
-      #workspaces button.active {
-      color: #ffffff;
-      background: #333333;
-      }
-      #clock, #battery, #pulseaudio, #tray {
-      padding: 0 10px;
-      color: #ffffff;
-      }
-    '';
-  };
+  # Waybar is enabled in home/hyprland.nix; detailed settings live in home/waybar.nix.
 
   wayland.windowManager.hyprland = {
     enable = true;

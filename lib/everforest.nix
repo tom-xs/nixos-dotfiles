@@ -14,6 +14,7 @@ if themeVariant == "dark" then
     fg1 = "#a6acae";
 
     # Accents
+    accent = "#a7c080";
     green = "#a7c080";
     blue = "#7fbbb3";
     red = "#e67e80";
@@ -54,6 +55,7 @@ else
     fg1 = "#708089";
 
     # Accents
+    accent = "#a7c080";
     green = "#a7c080";
     blue = "#7fbbb3";
     red = "#e67e80";
