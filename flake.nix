@@ -17,6 +17,10 @@
       url = "github:ogulcancelik/herdr";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    kimi-code = {
+      url = "github:MoonshotAI/kimi-code";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -27,6 +31,7 @@
       nixgl,
       helium,
       herdr,
+      kimi-code,
       ...
     }@inputs:
     let
@@ -97,6 +102,7 @@
             inherit inputs;
             themeVariant = "dark";
             herdr = herdr.packages.${system}.default;
+            kimi-code = kimi-code.packages.${system}.default;
           };
           modules = [ ./hosts/recife/home.nix ];
         };
@@ -106,6 +112,7 @@
             inherit inputs;
             themeVariant = "dark"; # Defaults to dark theme
             herdr = herdr.packages.${system}.default;
+            kimi-code = kimi-code.packages.${system}.default;
           };
           modules = [ ./hosts/wsl/home.nix ];
         };

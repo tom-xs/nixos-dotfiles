@@ -4,20 +4,6 @@
   lib,
   ...
 }:
-
-let
-
-  #nixpkgs-local = fetchGit {
-  #  url = "/home/tomasxs/Projects/nixpkgs/";
-  #  ref = "appium-update";
-  #};
-  pkgs-local =
-    # nixpkgs-local \
-    import {
-      system = builtins.currentSystem;
-      config.allowUnfree = true;
-    };
-in
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
@@ -77,6 +63,7 @@ in
     ../../home/tmux.nix
     ../../home/herdr.nix
     ../../home/kitty.nix
+    ../../home/kimi-code.nix
   ];
 
   xdg.portal = {
