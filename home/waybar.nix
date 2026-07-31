@@ -10,258 +10,74 @@
         layer = "top";
         position = "top";
         height = 26;
-        spacing = 0;
-        margin-top = 5;
-        margin-left = 10;
-        margin-right = 10;
-
         modules-left = [ "hyprland/workspaces" ];
-        modules-center = [
-          "clock"
-          "group/music"
-        ];
+        modules-center = [ "clock" ];
         modules-right = [
-          "group/audio"
-          "network"
-          "group/hardware"
-          "backlight"
           "battery"
+          "pulseaudio"
           "tray"
         ];
 
-        # --- Groups ---
-        "group/music" = {
-          orientation = "horizontal";
-          modules = [
-            "custom/prev"
-            "mpris"
-            "custom/next"
-          ];
-        };
-
-        "group/audio" = {
-          orientation = "horizontal";
-          modules = [
-            "pulseaudio"
-            "pulseaudio#microphone"
-          ];
-        };
-
-        "group/hardware" = {
-          orientation = "horizontal";
-          modules = [
-            "cpu"
-            "memory"
-            "custom/gpu"
-          ];
-        };
-
-        # --- Modules ---
         "hyprland/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
-          format = "{icon}";
-          format-icons = {
-            "1" = "";
-            "2" = "";
-            "3" = "";
-            "4" = "󰎚";
-          };
-          persistent-workspaces = {
-            "1" = [ ];
-            "2" = [ ];
-            "3" = [ ];
-          };
-        };
+          format = "{name}";
 
-        "clock" = {
-          format = "{:%H:%M | %d/%m/%y}";
-          tooltip-format = "{calendar}";
-          calendar = {
-            mode = "year";
-            mode-mon-col = 3;
-            weeks-pos = "right";
-            on-scroll = 1;
-            format = {
-              months = "{}";
-              days = "{}";
-              weeks = "W{}";
-              today = "{}";
-            };
-          };
+          show-special = true;
+          special-visible-only = true;
         };
-
-        "mpris" = {
-          format = "{status_icon}";
-          format-paused = "{status_icon}";
-          format-stopped = "{status_icon}";
-          status-icons = {
-            playing = "";
-            paused = "▶";
-            stopped = "■";
-          };
-          on-click = "playerctl play-pause";
-          on-click-right = "noop";
+        clock = {
+          format = "{:%H:%M - %d/%m/%Y}";
+          tooltip-format = "<tt>{calendar}</tt>";
         };
-
-        "custom/prev" = {
-          format = "⏮";
-          on-click = "playerctl previous";
-          tooltip = false;
+        battery = {
+          format = "{capacity}%";
+          format-charging = "{capacity}% ";
+          format-low = "{capacity}% ";
         };
-
-        "custom/next" = {
-          format = "⏭";
-          on-click = "playerctl next";
-          tooltip = false;
-        };
-
-        "backlight" = {
-          format = "{icon} {percent}%";
-          format-icons = [
-            ""
-            ""
-          ];
-        };
-
-        "pulseaudio" = {
-          format = "{icon} {volume}%";
-          format-bluetooth = " {volume}%";
-          format-muted = "";
-          format-icons = {
-            headphone = "";
-            hands-free = "";
-            headset = "";
-            phone = "";
-            portable = "";
-            car = "";
-            default = [
-              ""
-              ""
-            ];
-          };
-          scroll-step = 1;
-          on-click = "pavucontrol";
-        };
-
-        "pulseaudio#microphone" = {
-          format = "{format_source}";
-          format-source = " {volume}%";
-          format-source-muted = "";
-          on-click = "pavucontrol";
-        };
-
-        "network" = {
-          format-wifi = " {essid}";
-          format-ethernet = " Eth";
-          format-linked = " (No IP)";
-          format-disconnected = "⚠ Off";
-          on-click = "nm-connection-editor";
-        };
-
-        "cpu" = {
-          format = " {usage}%";
-          tooltip = false;
-        };
-        "memory" = {
-          format = " {}%";
-        };
-        "custom/gpu" = {
-          exec = "nvidia-smi --query-gpu=utilization.gpu --format=csv,noheader,nounits";
-          format = " {}%";
-          interval = 5;
-        };
-
-        "battery" = {
-          states = {
-            good = 95;
-            warning = 30;
-            critical = 15;
-          };
-          format = "{icon} {capacity}%";
-          format-icons = [
-            ""
-            ""
-            ""
-            ""
-            ""
-          ];
-        };
-        "tray" = {
-          spacing = 10;
+        pulseaudio = {
+          format = "VOL {volume}%";
+          format-muted = "VOL MUTE";
         };
       };
     };
 
-    # --- CSS Styles ---
     style = ''
-      * {
-        border: none;
-        border-radius: 0;
-        font-family: "JetBrainsMono Nerd Font", monospace;
-        font-size: 11px;
-        font-weight: bold;
-        min-height: 0;
+            * {
+      border: none;
+              border-radius: 0;
+              font-family: monospace;
+              font-size: 13px;
+              min-height: 0;
+            }
+          window#waybar {
+      background: #000000;
+      color: #ffffff;
+             border-bottom: 1px solid #333333;
+          }
+      #workspaces button {
+      padding: 0 5px;
+      background: transparent;
+      color: #888888;
       }
-
-      window#waybar {
-        background: transparent;
-        color: #5c5f77;
+      #workspaces button.active {
+      color: #ffffff;
+      background: #333333;
       }
-
-      /* Spacing */
-      #workspaces, #clock, #group-music, #group-audio, #network, #group-hardware, #backlight, #battery, #tray {
-        margin: 0 4px;
+      #clock, #battery, #pulseaudio, #tray {
+      padding: 0 10px;
+      color: #ffffff;
       }
-
-      /*
-       * STYLE:
-       * Background: White
-       * Border: 2px Solid Dark Grey (#5c5f77)
-       */
-
-      #workspaces,
-      #clock,
-      #mpris, #custom-prev, #custom-next,
-      #pulseaudio, #pulseaudio.microphone,
-      #network,
-      #cpu, #memory, #custom-gpu,
-      #backlight,
-      #battery,
-      #tray {
-        background-color: #ffffff;
-        color: #5c5f77;
-        padding: 0 6px;
-        border-radius: 6px;
-        border: 2px solid #5c5f77;
+      tooltip {
+      background: #000000;
+      color: #ffffff;
+      border: 1px solid #333333;
       }
-
-      /* Workspaces Specifics */
-      #workspaces { padding: 0; }
-      #workspaces button { padding: 0 5px; background: transparent; color: #5c5f77; }
-      #workspaces button.active { background-color: #f9e2af; color: #5c5f77; border-radius: 4px; }
-      #workspaces button:hover { background: rgba(249, 226, 175, 0.5); border-radius: 4px; }
-
-      /* Fix Group Borders */
-
-      /* Music Group */
-      #custom-prev { border-right: none; border-radius: 6px 0 0 6px; }
-      #mpris { border-left: none; border-right: none; border-radius: 0; }
-      #custom-next { border-left: none; border-radius: 0 6px 6px 0; }
-
-      /* Audio Group */
-      #pulseaudio { border-right: none; border-radius: 6px 0 0 6px; }
-      #pulseaudio.microphone { border-left: none; border-radius: 0 6px 6px 0; }
-
-      /* Hardware Group */
-      #cpu { border-right: none; border-radius: 6px 0 0 6px; }
-      #memory { border-left: none; border-right: none; border-radius: 0; }
-      #custom-gpu { border-left: none; border-radius: 0 6px 6px 0; }
-
-      #battery.charging { background-color: #f9e2af; }
-      #battery.critical:not(.charging) { background-color: #ffcccc; animation: blink 0.5s linear infinite alternate; }
-
-      @keyframes blink { to { background-color: #ffffff; } }
+      tooltip label {
+      color: #ffffff;
+      font-family: monospace;
+      font-size: 14px;
+      }
     '';
   };
 }

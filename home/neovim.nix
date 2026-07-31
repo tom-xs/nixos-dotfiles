@@ -41,6 +41,9 @@
       hadolint
       pyright
       ruff
+      typescript-language-server
+      kotlin-language-server
+      ktlint
     ];
 
     plugins = with pkgs.vimPlugins; [
@@ -188,6 +191,7 @@
               c = { "clang-format" },
               cpp = { "clang-format" },
               dockerfile = { "hadolint" },
+              kotlin = { "ktlint" },
           },
           format_on_save = { timeout_ms = 500, lsp_fallback = true },
       })
@@ -322,7 +326,7 @@
 
       -- LSP & CMP
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pyright", "elixirls", "gopls", "clangd", "sqls", "gleam", "docker_compose_language_service", "dockerfilels" }
+      local servers = { "lua_ls", "nil_ls", "nixd", "rust_analyzer", "pyright", "elixirls", "gopls", "clangd", "sqls", "gleam", "docker_compose_language_service", "dockerfilels", "ts_ls", "kotlin_language_server" }
 
       for _, lsp in ipairs(servers) do
           if vim.lsp.config then

@@ -58,6 +58,7 @@
   imports = [
     ../../home/hyprland-minimal.nix
     ../../home/hyprland.nix
+    ../../home/waybar.nix
     ../../home/neovim.nix
     ../../home/shell.nix
     ../../home/tmux.nix
