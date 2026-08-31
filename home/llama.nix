@@ -13,7 +13,7 @@
 }:
 
 let
-  llama = "${pkgs.llama-cpp}/bin/llama-server";
+  llama = "${pkgs.llama-cpp}/bin/llama";
 in
 {
   # Install llama.cpp, and provide a `llama-pi-serve` wrapper that prefers the
