@@ -1,5 +1,9 @@
-{ pkgs, lib, kimi-code, ... }:
-
+{
+  pkgs,
+  lib,
+  kimi-code,
+  ...
+}:
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
@@ -14,6 +18,7 @@
     ../../home/konsole.nix
     ../../home/emacs.nix
     ../../home/kimi-code.nix
+    ../../home/llama.nix
   ];
 
   programs.git = {
