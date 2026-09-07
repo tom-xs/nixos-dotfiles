@@ -36,7 +36,7 @@ This repository manages system and user configurations across multiple machines 
 │   ├── waybar.nix         # Waybar status bar
 │   ├── herdr.nix          # Herdr terminal multiplexer
 │   ├── emacs.nix          # Doom Emacs
-│   └── kimi-code.nix      # Kimi Code CLI (links ~/.agents/skills to ai/skills/)
+│   └── agent-skills.nix   # Links ~/.agents/skills to ai/skills/ for any AI agent
 ├── modules/               # NixOS system modules (NixOS hosts only)
 │   ├── common-hyper-desktop.nix
 │   ├── hyprland.nix

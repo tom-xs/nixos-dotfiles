@@ -75,6 +75,6 @@ The allowlist of active skills is defined in `ai/skills/pi-skills.txt`.
 git submodule update --remote --merge
 ```
 
-### Kimi Code
+### Other agents
 
-`home/kimi-code.nix` links `~/.agents/skills` to `ai/skills/`, so Kimi Code discovers the same skill collection.
+`home/agent-skills.nix` links `~/.agents/skills` to `ai/skills/`. This path is recognized by several agent harnesses (Kimi Code, Codex, Claude Code, etc.), so they all discover the same skill collection.

@@ -64,7 +64,7 @@
     ../../home/tmux.nix
     ../../home/herdr.nix
     ../../home/kitty.nix
-    ../../home/kimi-code.nix
+    ../../home/agent-skills.nix
   ];
 
   xdg.portal = {

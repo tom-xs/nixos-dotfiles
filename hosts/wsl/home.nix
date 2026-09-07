@@ -34,7 +34,7 @@ in
     ../../home/shell.nix
     ../../home/tmux.nix
     ../../home/herdr.nix
-    ../../home/kimi-code.nix
+    ../../home/agent-skills.nix
   ];
 
   home.sessionPath = [

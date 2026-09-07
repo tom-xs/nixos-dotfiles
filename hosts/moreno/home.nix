@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  kimi-code,
   inputs,
   config,
   ...
@@ -36,7 +35,7 @@
     ../../home/tmux.nix
     ../../home/konsole.nix
     ../../home/emacs.nix
-    ../../home/kimi-code.nix
+    ../../home/agent-skills.nix
     ../../home/fonts.nix
     ../../home/llama.nix
   ];
