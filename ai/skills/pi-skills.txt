@@ -1,0 +1,44 @@
+# Skills ativas no Pi Harness
+# Execute ./ai/skills/sync-pi-skills.sh para sincronizar
+
+# Workflow & Engenharia
+obra-superpowers/skills/using-superpowers
+obra-superpowers/skills/brainstorming
+obra-superpowers/skills/writing-plans
+obra-superpowers/skills/systematic-debugging
+obra-superpowers/skills/verification-before-completion
+obra-superpowers/skills/test-driven-development
+
+# QA & Testes
+fugazi-test-automation/skills/api-testing
+fugazi-test-automation/skills/qa-manual-istqb
+fugazi-test-automation/skills/grill-me-qa
+fugazi-test-automation/skills/playwright-regression-testing
+fugazi-test-automation/skills/playwright-e2e-testing
+fugazi-test-automation/skills/qa-investigation
+fugazi-test-automation/skills/a11y-playwright-testing
+
+# Cypress
+mindrally-skills/cypress
+
+# Robot Framework
+robotframework-agentskills/skills/robotframework-testcase-builder
+robotframework-agentskills/skills/robotframework-keyword-builder
+robotframework-agentskills/skills/robotframework-resource-architect
+robotframework-agentskills/skills/robotframework-browser-skill
+robotframework-agentskills/skills/robotframework-selenium-skill
+
+# Appium
+appium-skills/skills/setup-uiautomator2
+appium-skills/skills/setup-xcuitest
+appium-skills/skills/appium-troubleshooting
+
+# Documentação & Produto
+anthropics-skills/skills/webapp-testing
+anthropics-skills/skills/doc-coauthoring
+product-on-purpose-pm-skills/skills/deliver-user-stories
+simplified-technical-portuguese
+
+# Produtividade
+mattpocock-skills/skills/productivity/grill-me
+ayghri-i-have-adhd/.cursor/skills/i-have-adhd
