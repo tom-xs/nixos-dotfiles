@@ -48,7 +48,7 @@ Repository layout:
 - `home/` — shared Home Manager modules
 - `modules/` — NixOS system modules
 - `lib/` — shared Nix helper code
-- `ai/kimi-skills/` — Kimi Code CLI agent skills
+- `ai/skills/` — AI agent skills (Pi, Kimi Code, Codex, etc.) managed as Git submodules
 
 Always explain the "why" behind a change, cite file paths with line numbers when
 possible, and tell the user which `home-manager switch` or `nixos-rebuild switch`

@@ -36,7 +36,7 @@ This repository manages system and user configurations across multiple machines 
 │   ├── waybar.nix         # Waybar status bar
 │   ├── herdr.nix          # Herdr terminal multiplexer
 │   ├── emacs.nix          # Doom Emacs
-│   └── kimi-code.nix      # Kimi Code CLI + agent skills
+│   └── kimi-code.nix      # Kimi Code CLI + ~/.agents/skills link
 ├── modules/               # NixOS system modules (NixOS hosts only)
 │   ├── common-hyper-desktop.nix
 │   ├── hyprland.nix
@@ -45,7 +45,7 @@ This repository manages system and user configurations across multiple machines 
 │   ├── fonts.nix
 │   ├── testing.nix
 │   └── maintenance.nix
-└── ai/kimi-skills/        # Kimi Code CLI agent skills
+└── ai/skills/             # AI agent skills managed as Git submodules
 ```
 
 ## Key Technologies
@@ -83,6 +83,30 @@ This repository manages system and user configurations across multiple machines 
 - GIMP: Image editor
 - Vesktop: Discord client
 - Telegram Desktop: Messaging
+
+## AI Agent Skills
+
+The `ai/skills/` directory contains AI agent skills managed as **Git submodules** from upstream repositories (Anthropic, Fugazi, obra, Appium, Robot Framework, Mindrally, etc.). This makes it easy to keep skills updated without copy-pasting files.
+
+### Activating skills in Pi
+
+Pi loads skills from `~/.pi/agent/skills/`. To keep the active skills in sync with this repository, run:
+
+```bash
+./ai/skills/sync-pi-skills.sh
+```
+
+The allowlist of active skills is defined in `ai/skills/pi-skills.txt`.
+
+### Updating all skills
+
+```bash
+git submodule update --remote --merge
+```
+
+### Kimi Code
+
+`home/kimi-code.nix` links `~/.agents/skills` to `ai/skills/`, so Kimi Code discovers the same skill collection.
 
 ## Usage
 
