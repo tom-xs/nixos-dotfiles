@@ -29,3 +29,12 @@
 [submodule "ai/skills/mattpocock-skills"]
 	path = ai/skills/mattpocock-skills
 	url = https://github.com/mattpocock/skills.git
+[submodule "ai/skills/appium-skills"]
+	path = ai/skills/appium-skills
+	url = https://github.com/appium/skills.git
+[submodule "ai/skills/robotframework-agentskills"]
+	path = ai/skills/robotframework-agentskills
+	url = https://github.com/manykarim/robotframework-agentskills.git
+[submodule "ai/skills/mindrally-skills"]
+	path = ai/skills/mindrally-skills
+	url = https://github.com/Mindrally/skills.git
