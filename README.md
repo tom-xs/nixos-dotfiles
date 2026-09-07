@@ -36,7 +36,7 @@ This repository manages system and user configurations across multiple machines 
 │   ├── waybar.nix         # Waybar status bar
 │   ├── herdr.nix          # Herdr terminal multiplexer
 │   ├── emacs.nix          # Doom Emacs
-│   └── kimi-code.nix      # Kimi Code CLI + ~/.agents/skills link
+│   └── kimi-code.nix      # Kimi Code CLI (links ~/.agents/skills to ai/skills/)
 ├── modules/               # NixOS system modules (NixOS hosts only)
 │   ├── common-hyper-desktop.nix
 │   ├── hyprland.nix
@@ -103,10 +103,6 @@ The allowlist of active skills is defined in `ai/skills/pi-skills.txt`.
 ```bash
 git submodule update --remote --merge
 ```
-
-### Kimi Code
-
-`home/kimi-code.nix` links `~/.agents/skills` to `ai/skills/`, so Kimi Code discovers the same skill collection.
 
 ## Usage
 
