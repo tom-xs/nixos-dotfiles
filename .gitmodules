@@ -1,6 +1,7 @@
 [submodule "ai/skills/simplified-technical-portuguese"]
 	path = ai/skills/simplified-technical-portuguese
 	url = git@github.com:tom-xs/simplified-technical-portuguese.git
+	branch = main
 [submodule "ai/skills/anthropics-skills"]
 	path = ai/skills/anthropics-skills
 	url = https://github.com/anthropics/skills.git
