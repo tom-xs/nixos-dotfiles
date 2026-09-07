@@ -1,3 +1,30 @@
 [submodule "ai/skills/simplified-technical-portuguese"]
 	path = ai/skills/simplified-technical-portuguese
 	url = git@github.com:tom-xs/simplified-technical-portuguese.git
+[submodule "ai/skills/anthropics-skills"]
+	path = ai/skills/anthropics-skills
+	url = https://github.com/anthropics/skills.git
+[submodule "ai/skills/fugazi-test-automation"]
+	path = ai/skills/fugazi-test-automation
+	url = https://github.com/fugazi/test-automation-skills-agents.git
+[submodule "ai/skills/obra-superpowers"]
+	path = ai/skills/obra-superpowers
+	url = https://github.com/obra/superpowers.git
+[submodule "ai/skills/product-on-purpose-pm-skills"]
+	path = ai/skills/product-on-purpose-pm-skills
+	url = https://github.com/product-on-purpose/pm-skills.git
+[submodule "ai/skills/Digidai-product-manager-skills"]
+	path = ai/skills/Digidai-product-manager-skills
+	url = https://github.com/Digidai/product-manager-skills.git
+[submodule "ai/skills/vercel-labs-agent-skills"]
+	path = ai/skills/vercel-labs-agent-skills
+	url = https://github.com/vercel-labs/agent-skills.git
+[submodule "ai/skills/ayghri-i-have-adhd"]
+	path = ai/skills/ayghri-i-have-adhd
+	url = https://github.com/ayghri/i-have-adhd.git
+[submodule "ai/skills/wyattowalsh-agents"]
+	path = ai/skills/wyattowalsh-agents
+	url = https://github.com/wyattowalsh/agents.git
+[submodule "ai/skills/mattpocock-skills"]
+	path = ai/skills/mattpocock-skills
+	url = https://github.com/mattpocock/skills.git
