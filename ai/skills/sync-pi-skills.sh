@@ -13,12 +13,12 @@ fi
 
 mkdir -p "$PI_SKILLS_DIR"
 
-# Backup existing symlinks
+# Backup existing symlinks (backup directory is created only when needed)
 BACKUP_DIR="$PI_SKILLS_DIR/.backup-$(date +%Y%m%d-%H%M%S)"
-mkdir -p "$BACKUP_DIR"
 for link in "$PI_SKILLS_DIR"/*; do
   [ -e "$link" ] || continue
   if [ -L "$link" ]; then
+    mkdir -p "$BACKUP_DIR"
     mv "$link" "$BACKUP_DIR/"
   fi
 done

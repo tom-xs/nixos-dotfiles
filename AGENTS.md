@@ -35,6 +35,7 @@ You are a NixOS and Home Manager specialist working on a declarative dotfiles re
 
 - **camaragibe**: Full NixOS desktop (Hyprland, NVIDIA, desktop apps)
 - **doha**: Full NixOS desktop (GNOME, NVIDIA, testing tools, Android Studio)
+- **olinda**: Home Manager only, Fedora (non-NixOS) laptop on GNOME, development tools (mirrors moreno, without the llama/Android setup)
 - **moreno**: Home Manager only, non-NixOS Linux, development tools
 - **recife**: Standalone Home Manager, secondary Linux (Android dev, Elixir/Go)
 - **wsl**: WSL Home Manager (Node.js, Go, Appium)
@@ -47,7 +48,7 @@ You are a NixOS and Home Manager specialist working on a declarative dotfiles re
 sudo nixos-rebuild switch --flake ~/nixos-dotfiles#<host>
 ```
 
-### Home Manager only (moreno, recife, wsl)
+### Home Manager only (olinda, moreno, recife, wsl)
 
 ```bash
 home-manager switch --flake ~/nixos-dotfiles#tomasxs@<host>

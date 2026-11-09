@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
+let
+  piNode = import ../lib/pi-node.nix;
+in
 {
   # --- Starship Prompt ---
   programs.starship = {
@@ -23,7 +26,7 @@
 
     interactiveShellInit = ''
       set fish_greeting # Disable the default fish greeting
-      set -gx PATH $HOME/.local/share/pi-node/node-v22.23.2-linux-x64/bin $PATH
+      set -gx PATH $HOME/${piNode.relBinDir} $PATH
     '';
   };
 
@@ -32,7 +35,7 @@
     enable = true;
     enableCompletion = true;
     initExtra = ''
-      export PATH="$HOME/.local/share/pi-node/node-v22.23.2-linux-x64/bin:$PATH"
+      export PATH="$HOME/${piNode.relBinDir}:$PATH"
     '';
   };
 

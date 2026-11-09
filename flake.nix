@@ -91,6 +91,17 @@
             ./hosts/moreno/home.nix
           ];
         };
+        "tomasxs@olinda" = home-manager.lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit inputs;
+            themeVariant = "dark";
+            herdr = herdr.packages.${system}.default;
+          };
+          modules = [
+            ./hosts/olinda/home.nix
+          ];
+        };
         "tomasxs@recife" = home-manager.lib.homeManagerConfiguration {
           inherit pkgs;
           extraSpecialArgs = {
@@ -110,5 +121,13 @@
           modules = [ ./hosts/wsl/home.nix ];
         };
       };
+
+      # 3. Checks (run by `nix flake check` in CI)
+      # Evaluates the Olinda Home Manager config without building it: a full
+      # build pulls large packages, and the Orca AppImage is only in the Nix
+      # store on machines where it was added by hand.
+      checks.${system}.olinda-home-eval = pkgs.runCommand "olinda-home-eval" { } ''
+        echo ${builtins.unsafeDiscardStringContext self.homeConfigurations."tomasxs@olinda".activationPackage.drvPath} > $out
+      '';
     };
 }

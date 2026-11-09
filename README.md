@@ -10,6 +10,7 @@ This repository manages system and user configurations across multiple machines 
 
 - **camaragibe**: Full NixOS desktop (Hyprland, NVIDIA, desktop apps)
 - **doha**: Full NixOS desktop (GNOME, NVIDIA, testing tools, Android Studio)
+- **olinda**: Home Manager only, Fedora (non-NixOS) laptop on GNOME, development tools
 - **moreno**: Home Manager only, non-NixOS Linux, development tools
 - **recife**: Standalone Home Manager, secondary Linux (Android dev, Elixir/Go)
 - **wsl**: WSL Home Manager (Node.js, Go, Appium)
@@ -22,6 +23,7 @@ This repository manages system and user configurations across multiple machines 
 ├── hosts/                 # Machine-specific configurations
 │   ├── camaragibe/        # Full NixOS (Hyprland + NVIDIA + gaming)
 │   ├── doha/              # Full NixOS (GNOME + NVIDIA + testing)
+│   ├── olinda/            # Home Manager only (Fedora laptop)
 │   ├── moreno/            # Home Manager only
 │   ├── recife/            # Home Manager only (Android dev)
 │   └── wsl/               # WSL Home Manager
@@ -112,13 +114,18 @@ git submodule update --remote --merge
 sudo nixos-rebuild switch --flake ~/nixos-dotfiles#<host>
 ```
 
-### Home Manager only (moreno, recife, wsl)
+### Home Manager only (olinda, moreno, recife, wsl)
 
 ```bash
 home-manager switch --flake ~/nixos-dotfiles#tomasxs@<host>
 ```
 
 Note: currently recife and wsl need `--impure` (local `fetchGit` source) to load appium package.
+
+### Olinda notes
+
+- Fedora (non-NixOS) laptop: Nix is routed through the daemon with `NIX_REMOTE=daemon` (set in `hosts/olinda/home.nix`).
+- Orca IDE is packaged from a local AppImage (`home/orca.nix`). Add the file to the Nix store once per machine: `nix-store --add-fixed sha256 ~/Downloads/orca-linux.AppImage`.
 
 ## Hardware
 
