@@ -69,7 +69,6 @@
     libreoffice-still
     obsidian
     kdePackages.okular
-    zotero
     calibre
     gimp
     thunderbird

@@ -35,7 +35,6 @@
       zed-editor
       libreoffice-still
       obsidian
-      zotero
       calibre
       gimp
       thunderbird

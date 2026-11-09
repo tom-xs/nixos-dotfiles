@@ -40,7 +40,6 @@
       httpie-desktop
       httpie
       obsidian
-      zotero
       calibre
       gimp
     ];
