@@ -32,6 +32,7 @@
     ../../home/agent-skills.nix
     ../../home/fonts.nix
     ../../home/orca.nix
+    ../../home/alacritty.nix
   ];
 
   programs.git = {
