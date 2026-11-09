@@ -1,8 +1,5 @@
 { pkgs, ... }:
 
-let
-  piNode = import ../lib/pi-node.nix;
-in
 {
   # --- Starship Prompt ---
   programs.starship = {
@@ -26,7 +23,6 @@ in
 
     interactiveShellInit = ''
       set fish_greeting # Disable the default fish greeting
-      set -gx PATH $HOME/${piNode.relBinDir} $PATH
     '';
   };
 
@@ -34,9 +30,6 @@ in
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    initExtra = ''
-      export PATH="$HOME/${piNode.relBinDir}:$PATH"
-    '';
   };
 
   # Eza (Better ls)

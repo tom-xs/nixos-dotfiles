@@ -6,9 +6,6 @@
   ...
 }:
 
-let
-  piNode = import ../../lib/pi-node.nix;
-in
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
@@ -22,7 +19,6 @@ in
   };
 
   home.sessionPath = [
-    "${config.home.homeDirectory}/${piNode.relBinDir}"
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/go/bin"
     "/opt/android-studio/bin"
@@ -42,6 +38,7 @@ in
     ../../home/agent-skills.nix
     ../../home/fonts.nix
     ../../home/llama.nix
+    ../../home/pi-harness.nix
   ];
 
   programs.git = {

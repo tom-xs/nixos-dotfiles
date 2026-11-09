@@ -14,7 +14,6 @@
   # with "opening lock file ... Permission denied"; route it via the daemon.
   home.sessionVariables.NIX_REMOTE = "daemon";
 
-  # pi-node's bin dir is already on PATH via home/shell.nix.
   home.sessionPath = [
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/go/bin"
@@ -33,6 +32,7 @@
     ../../home/fonts.nix
     ../../home/orca.nix
     ../../home/alacritty.nix
+    ../../home/pi-harness.nix
   ];
 
   programs.git = {
