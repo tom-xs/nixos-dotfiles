@@ -5,6 +5,10 @@
   config,
   ...
 }:
+
+let
+  piNode = import ../../lib/pi-node.nix;
+in
 {
   home.username = "tomasxs";
   home.homeDirectory = "/home/tomasxs";
@@ -18,7 +22,7 @@
   };
 
   home.sessionPath = [
-    "${config.home.homeDirectory}/.local/share/pi-node/node-v22.23.2-linux-x64/bin"
+    "${config.home.homeDirectory}/${piNode.relBinDir}"
     "${config.home.homeDirectory}/.local/bin"
     "${config.home.homeDirectory}/go/bin"
     "/opt/android-studio/bin"

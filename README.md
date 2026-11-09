@@ -125,7 +125,7 @@ Note: currently recife and wsl need `--impure` (local `fetchGit` source) to load
 ### Olinda notes
 
 - Fedora (non-NixOS) laptop: Nix is routed through the daemon with `NIX_REMOTE=daemon` (set in `hosts/olinda/home.nix`).
-- Orca IDE is packaged from a local AppImage (`home/orca.nix`). Add the file to the Nix store once per machine: `nix-store --add-fixed sha256 ~/Downloads/orca-linux.AppImage`.
+- Orca IDE is packaged from its GitHub release (`home/orca.nix`), pinned by version and hash.
 
 ## Hardware
 
