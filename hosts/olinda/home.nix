@@ -32,6 +32,7 @@
     ../../home/fonts.nix
     ../../home/orca.nix
     ../../home/alacritty.nix
+    ../../home/helix.nix
     ../../home/pi-harness.nix
   ];
 
