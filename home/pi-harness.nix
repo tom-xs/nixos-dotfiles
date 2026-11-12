@@ -76,7 +76,7 @@ in
 
   # Merge only the keys this module owns into settings.json. Pi also writes
   # this file (`/settings`, `pi install`), so it stays a regular file.
-  home.activation.piSettings = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+  home.activation.pi_settings =lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     settings="$HOME/.pi/agent/settings.json"
     mkdir -p "$(dirname "$settings")"
     [ -f "$settings" ] || echo '{}' > "$settings"
